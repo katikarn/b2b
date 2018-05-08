@@ -53,49 +53,8 @@ $page_nav = array(
 			),			
 		),
 	),
-	"E-Wallet" => array(
-		"title" => "[2] E-Wallet",
-		"url" => "index.php",
-		"icon" => "fa-book",
-	),
-	"Promotion" => array(
-		"title" => "[3] Promotion",
-		"icon" => "fa-book",
-		"sub" => array(
-			"Promo Code" => array(
-				"title" => "Promo Code",
-				"url" => APP_URL."/#"
-			),
-			"Deal" => array(
-				"title" => "Deal",
-				"url" => APP_URL."/#"
-			),			
-		),
-	),
-	"Supplier" => array(
-		"title" => "[4] Supplier",
-		"icon" => "fa-book",
-		"sub" => array(
-			"Supplier List" => array(
-				"title" => "Supplier List",
-				"url" => APP_URL."/#"
-			),
-			"Product" => array(
-				"title" => "Product",
-				"url" => APP_URL."/#"
-			),
-			"Day Off" => array(
-				"title" => "Day Off",
-				"url" => APP_URL."/#"
-			),
-			"Full Product" => array(
-				"title" => "Full Product",
-				"url" => APP_URL."/#"
-			),	
-		),
-	),
-	"Service &  Operation" => array(
-		"title" => "[6] Service & Operation",
+	"Operation" => array(
+		"title" => "[2] Operation",
 		"icon" => "fa-book",
 		"sub" => array(
 			"Supplier List" => array(
@@ -112,13 +71,63 @@ $page_nav = array(
 			),
 		),
 	),
-	"Accounting" => array(
-		"title" => "[7] Accounting",
+	"E-Wallet" => array(
+		"title" => "[3] E-Wallet",
 		"url" => "index.php",
 		"icon" => "fa-book",
 	),
+	"Promotion" => array(
+		"title" => "[4] Promotion",
+		"icon" => "fa-book",
+		"sub" => array(
+			"Promo Code" => array(
+				"title" => "Promo Code",
+				"url" => APP_URL."/#"
+			),
+			"Deal" => array(
+				"title" => "Deal",
+				"url" => APP_URL."/#"
+			),			
+		),
+	),
+	"Supplier" => array(
+		"title" => "[5] Supplier",
+		"icon" => "fa-book",
+		"sub" => array(
+			"Supplier List" => array(
+				"title" => "[5.1] Supplier List",
+				"url" => APP_URL."/#"
+			),
+			"Product" => array(
+				"title" => "[5.2] Product",
+				"url" => APP_URL."/#"
+			),
+			"Day Off" => array(
+				"title" => "Day Off",
+				"url" => APP_URL."/#"
+			),
+			"Full Product" => array(
+				"title" => "Full Product",
+				"url" => APP_URL."/#"
+			),	
+		),
+	),
+	"Agent" => array(
+		"title" => "[6] Agent",
+		"icon" => "fa-book",
+		"sub" => array(
+			"Agent List" => array(
+				"title" => "Agent List",
+				"url" => APP_URL."/#"
+			),
+			"Agent wait for approve" => array(
+				"title" => "Agent wait for approve",
+				"url" => APP_URL."/#"
+			),	
+		),
+	),
 	"Support to Agent" => array(
-		"title" => "[8] Support to Agent",
+		"title" => "[7] Support to Agent",
 		"icon" => "fa-book",
 		"sub" => array(
 			"Supplier List" => array(
@@ -131,13 +140,18 @@ $page_nav = array(
 			),
 		),
 	),
+	"Accounting" => array(
+		"title" => "[8] Accounting",
+		"url" => "index.php",
+		"icon" => "fa-book",
+	),
 	"Setting" => array(
 		"title" => "[9] Setting",
 		"icon" => "fa-book",
 		"sub" => array(
-			"User Setup" => array(
-				"title" => "User Setup",
-				"url" => APP_URL."/#"
+			"User Management" => array(
+				"title" => "User Management",
+				"url" => APP_URL."/user.php"
 			),
 			"Master of Supplier" => array(
 				"title" => "Master of Supplier",

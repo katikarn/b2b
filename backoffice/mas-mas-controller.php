@@ -2,7 +2,6 @@
 session_start();
 include("inc/constant.php");
 include("inc/connectionToMysql.php");
-include("inc/php-audittrail.php");
 
 	if(isset($_POST["submitAdd"]))	{
 		if(isset($_POST["mas_id"])){
@@ -42,7 +41,7 @@ include("inc/php-audittrail.php");
 
 	// Delete Action
 	if (isset($_GET['hAction']))   {
-		if ($_GET['hAction']=="Delete")	{}
+		if ($_GET['hAction']=="Delete")	{
 			$sql = "DELETE FROM tb_mas_ms WHERE mas_id = '".$_GET['id']."'";
 			$result = mysqli_query($_SESSION['conn'] ,$sql);
 			if(!$result) {
