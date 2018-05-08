@@ -27,7 +27,7 @@
 
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["Master of Agent"]["sub"]["Country Of Agent "]["active"] = true;
+	$page_nav["Setting"]["sub"]["Master of Agent"]["sub"]["Country of Agent"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
