@@ -2,7 +2,6 @@
 session_start();
 include("inc/constant.php");
 include("inc/connectionToMysql.php");
-include("inc/php-audittrail.php");
 
 	if(isset($_POST["submitAdd"]))	{
 		if(isset($_POST["conf_id"])){
@@ -41,11 +40,13 @@ include("inc/php-audittrail.php");
 
 	// Delete Action
 	if (isset($_GET['hAction']))   {
-        $sql = "DELETE FROM tb_conf_ms WHERE conf_id = '".$_GET['id']."'";
-        $result = mysqli_query($_SESSION['conn'] ,$sql);
-        if(!$result) {
-            echo "<script>alert('Failed to delete.This supplier is already used.!'); window.location='mas-config.php'</script>";
+		if ($_GET['hAction']=='Delete')	{
+			$sql = "DELETE FROM tb_conf_ms WHERE conf_id = '".$_GET['id']."'";
+			$result = mysqli_query($_SESSION['conn'] ,$sql);
+			if(!$result) {
+				echo "<script>alert('Failed to delete.This is already used.!'); window.location='mas-config.php'</script>";
+			}
+			echo "<script>window.location='mas-config.php'</script>";
 		}
-		echo "<script>window.location='mas-config.php'</script>";
     }
 ?>

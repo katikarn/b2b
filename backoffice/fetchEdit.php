@@ -83,4 +83,12 @@
 		$row = mysqli_fetch_array($result);  
 		echo json_encode($row);
 	}
+
+	if(isset($_POST["currency_id"]))  
+	{  
+		$query = 	"SELECT * FROM tb_currency_ms WHERE currency_id = '".$_POST["currency_id"]."'";
+		$result = mysqli_query($_SESSION['conn'], $query);  
+		$row = mysqli_fetch_array($result);  
+		echo json_encode($row);
+	}
 ?>

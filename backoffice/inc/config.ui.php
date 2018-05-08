@@ -163,7 +163,7 @@ $page_nav = array(
 			),
 			"Currency" => array(
 				"title" => "Currency",
-				"url" => APP_URL."/#"
+				"url" => APP_URL."/mas-currency.php"
 			),
 			"All Master" => array(
 				"title" => "All Master",

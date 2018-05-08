@@ -1,4 +1,4 @@
-<?php 
+<?php
 	session_start();
 	include("inc/auth.php");
 	include("inc/constant.php");
@@ -15,7 +15,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 	
-	$page_title = "All Config";
+	$page_title = "Currency";
 	
 	/* ---------------- END PHP Custom Scripts ------------- */
 	
@@ -27,7 +27,7 @@
 	
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["All Config"]["active"] = true;
+	$page_nav["Setting"]["sub"]["Currency"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -106,23 +106,19 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-					All Config
+					Currency
 				</h1>
-			</div>
-			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-				
 			</div>
 		</div>
 		
 		<!-- widget grid -->
 		<section id="widget-grid" class="">
-			
+
 			<!-- row -->
 			<div class="row">
 				
 				<!-- NEW WIDGET START -->
 				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
 							Keyword<br/>
@@ -138,8 +134,9 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>			                
 										<tr class="header">
-											<th data-class="expand">Name</th>
-											<th data-hide="phone">Value</th>
+											<th data-class="expand">Code</th>
+											<th data-hide="phone">Name</th>
+											<th data-hide="phone">Rate</th>
 											<th data-hide="phone">Last Update</th>
 											<th data-hide="phone">Update By</th>											
 											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
@@ -150,22 +147,23 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT conf_id, conf_name, conf_value, update_datetime, update_by
-													FROM tb_conf_ms";
+											$sql = "SELECT currency_id, currency_code, currency_name, currency_flag, currency_rate, update_datetime, update_by
+													FROM tb_currency_ms";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
 												while($row = mysqli_fetch_assoc($result))	{?>
 													<tr>
-														<td><?=$row['conf_name']?></td>
-														<td><?=$row['conf_value']?></td>
+														<td><?=$row['currency_code']?></td>
+														<td><?=$row['currency_name']?></td>
+														<td><?=$row['currency_rate']?></td>
 														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
 														<td><?=$row['update_by']?></td>											
 														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['conf_id']?>" >Edit</a>
-															<a href="mas-config-controller.php?id=<?=$row['conf_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+															data-whatever="<?=$row['currency_id']?>" >Edit</a>
+															<a href="mas-currency-controller.php?id=<?=$row['currency_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
 														</td>
 													</tr>
 												<?PHP
@@ -191,48 +189,51 @@
 					<i class="icon-append fa fa-times"></i>
 				</button>
 				<h4 class="header">
-					All Config
+					Currency
 				</h4>
 			</div>
 			<div class="modal-body no-padding">
-				<form id="user-form" class="smart-form" method="POST" action="mas-config-controller.php">
+				<form id="user-form" class="smart-form" method="POST" action="mas-currency-controller.php">
 					<header>
-						All Config
+						Currency
 					</header>
 					<fieldset>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Name</label>
-								<div class="col col-10">
+								<label class="label col col-2">Currency Code</label>
+								<div class="col col-3">
 									<label class="input required">
-										<input type="text" name="txbconf_name" id="txbconf_name">
+										<input type="text" name="txbcurrency_code" id="txbcurrency_code" maxlength="3">
+									</label>
+								</div>
+								<label class="label col col-2">Currency Name</label>
+								<div class="col col-5">
+									<label class="input required">
+										<input type="text" name="txbcurrency_name" id="txbcurrency_name" maxlength="45">
 									</label>
 								</div>
 							</div>
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Value</label>
-								<div class="col col-10">
+								<label class="label col col-2">Rate</label>
+								<div class="col col-3">
 									<label class="input required">
-										<input type="text" name="txbconf_value" id="txbconf_value">
+										<input type="number" name="txbcurrency_rate" id="txbcurrency_rate"></textarea>
 									</label>
 								</div>
-							</div>
-						</section>
-						<section>
-							<div class="row">
-								<label class="label col col-2">Remark</label>
-								<div class="col col-10">
+								<label class="label col col-2">Flag</label>
+								<div class="col col-5">
 									<label class="input">
-										<textarea rows="3" name="txbconf_remark" id="txbconf_remark"></textarea>
+										<input type="text" name="txbcurrency_flag" id="txbcurrency_flag" maxlength="45">
 									</label>
 								</div>
+
 							</div>
 						</section>
 					</fieldset>
 					<footer class="center">
-						<input type="hidden" name="conf_id" id="conf_id" />
+						<input type="hidden" name="currency_id" id="currency_id" />
 						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
 							Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
@@ -299,7 +300,7 @@
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var recipient = button.data('whatever') // Extract info from data-* attributes
 			var modal = $(this);
-			var dataString = 'conf_id=' + recipient;
+			var dataString = 'currency_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
                 
@@ -310,16 +311,18 @@
                 
                 success: function (data) {
 					if(data != null){
-						$('#conf_id').val(data.conf_id);
-						$('#txbconf_name').val(data.conf_name);
-						$('#txbconf_value').val(data.conf_value);
-						$('#txbconf_remark').val(data.conf_remark);
+						$('#currency_id').val(data.currency_id);
+						$('#txbcurrency_code').val(data.currency_code);
+						$('#txbcurrency_name').val(data.currency_name);
+						$('#txbcurrency_flag').val(data.currency_flag);
+						$('#txbcurrency_rate').val(data.currency_rate);
 						$('#submitAdd').val("Update");  
 					}else{
-						$('#conf_id').val('');
-						$('#txbconf_name').val('');
-						$('#txbconf_value').val('');
-						$('#txbconf_remark').val('');
+						$('#currency_id').val('');
+						$('#txbcurrency_code').val('');
+						$('#txbcurrency_name').val('');
+						$('#txbcurrency_flag').val('');
+						$('#txbcurrency_rate').val('');
 						$('#submitAdd').val("Insert");
 					}
 				},
@@ -360,21 +363,31 @@
 		    },
 			// Rules for form validation
 			rules : {
-				txbconf_name : {
+				txbcurrency_code : {
+					required : true,
+					rangelength: [3, 3]
+				},
+				txbcurrency_name :{
 					required : true
 				},
-				txbconf_value :{
-					required : true
+				txbcurrency_rate :{
+					required : true,
+					number: true
 				}
 			},
 
 			// Messages for form validation
 			messages : {
-				txbconf_name : {
-					required : 'Please fill config name'
+				txbcurrency_code : {
+					required : 'Please fill Code',
+					rangelength : 'Please fill 3 digit of Code'
 				},
-				txbconf_value : {
-					required : 'Please fill config value'
+				txbcurrency_name : {
+					required : 'Please fill Name'
+				},
+				txbcurrency_rate : {
+					required : 'Please fill Rate',
+					number : 'Please fill Rate number only'
 				}
 			},
 
