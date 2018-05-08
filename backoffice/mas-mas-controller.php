@@ -42,11 +42,13 @@ include("inc/php-audittrail.php");
 
 	// Delete Action
 	if (isset($_GET['hAction']))   {
-        $sql = "DELETE FROM tb_mas_ms WHERE mas_id = '".$_GET['id']."'";
-        $result = mysqli_query($_SESSION['conn'] ,$sql);
-        if(!$result) {
-            echo "<script>alert('Failed to delete.This supplier is already used.!'); window.location='mas-mas.php'</script>";
+		if ($_GET['hAction']=="Delete")	{}
+			$sql = "DELETE FROM tb_mas_ms WHERE mas_id = '".$_GET['id']."'";
+			$result = mysqli_query($_SESSION['conn'] ,$sql);
+			if(!$result) {
+				echo "<script>alert('Failed to delete.This supplier is already used.!'); window.location='mas-mas.php'</script>";
+			}
+			echo "<script>window.location='mas-mas.php'</script>";
 		}
-		echo "<script>window.location='mas-mas.php'</script>";
     }
 ?>

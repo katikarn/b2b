@@ -13,6 +13,7 @@ include("inc/php-audittrail.php");
 		WHERE username = '$usernameU' 
 		AND password = '$passwordU'
 		AND user_status = 'A'";
+
 		$result = mysqli_query($_SESSION['conn'] ,$sql);
 
 		if(mysqli_num_rows($result) > 0)	{
@@ -34,7 +35,7 @@ include("inc/php-audittrail.php");
 		}else{
 			session_write_close();
 			echo "<script>alert('Username or Password incorrect'); window.location='login.php'</script>";
-			//header("location: login.php");
+			header("location: login.php");
 			exit();
 		}		
 	}else{
