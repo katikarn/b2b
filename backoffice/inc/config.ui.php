@@ -50,7 +50,7 @@ $page_nav = array(
 			"Booking History" => array(
 				"title" => "Wait for Confirm",
 				"url" => APP_URL."/#"
-			),			
+			),
 		),
 	),
 	"Operation" => array(
@@ -87,7 +87,7 @@ $page_nav = array(
 			"Deal" => array(
 				"title" => "Deal",
 				"url" => APP_URL."/#"
-			),			
+			),
 		),
 	),
 	"Supplier" => array(
@@ -109,7 +109,7 @@ $page_nav = array(
 			"Full Product" => array(
 				"title" => "Full Product",
 				"url" => APP_URL."/#"
-			),	
+			),
 		),
 	),
 	"Agent" => array(
@@ -123,7 +123,7 @@ $page_nav = array(
 			"Agent wait for approve" => array(
 				"title" => "Agent wait for approve",
 				"url" => APP_URL."/#"
-			),	
+			),
 		),
 	),
 	"Support to Agent" => array(
@@ -158,11 +158,11 @@ $page_nav = array(
 				"sub" => array(
 					"Destination" => array(
 						"title" => "Destination",
-						"url" => APP_URL."/#"
+						"url" => APP_URL."/mas-destination.php"
 					),
 					"Country of Destination" => array(
 						"title" => "Country of Destination",
-						"url" => APP_URL."/#"
+						"url" => APP_URL."/mas-countrydestination.php"
 					),
 				),
 			),
@@ -198,7 +198,7 @@ $page_nav = array(
 			),
 			"Audit Trail" => array(
 				"title" => "Audit Trail",
-				"url" => APP_URL."/#",
+				"url" => APP_URL."/mas-audittrail.php",
 			),
 		),
 	),

@@ -15,7 +15,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 
-	$page_title = "Type Of Master";
+	$page_title = "Destination";
 
 	/* ---------------- END PHP Custom Scripts ------------- */
 
@@ -27,7 +27,7 @@
 
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["All Master"]["sub"]["Type Of Master"]["active"] = true;
+	$page_nav["Setting"]["sub"]["Master of Supplier"]["sub"]["Destination"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -106,7 +106,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-					Type Of Master
+				Destination
 				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
@@ -125,7 +125,7 @@
 
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
-							Keyword<br/>
+							Keyword<br/> <!--เริ่มทำโปรเจค-->
 							<input id="column3_search" type="text" name="googlesearch">
 						</div>
 					</div>
@@ -138,8 +138,9 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">Name</th>
-											<th data-hide="phone">Last Update</th>
+											<th data-class="expand">Destination Name </th> <!--เพิ่ม-->
+											<th data-hide="phone">destcoun_id</th> <!--ซ่อน-->
+											<th data-hide="phone">Datetime</th>
 											<th data-hide="phone">Update By</th>
 											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
 										</tr>
@@ -149,21 +150,21 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT masofmas_id, masofmas_name, update_datetime, update_by
-													FROM tb_masofmas_ms";
+											$sql = "SELECT dest_id, dest_name,destcoun_id,create_datetime,create_by,update_datetime,update_by from tb_dest_ms";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
 												while($row = mysqli_fetch_assoc($result))	{?>
 													<tr>
-														<td><?=$row['masofmas_name']?></td>
+														<td><?=$row['dest_name']?></td>
+														<td><?=$row['destcoun_id']?></td>
 														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
 														<td><?=$row['update_by']?></td>
 														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['masofmas_id']?>" >Edit</a>
-															<a href="mas-masofmas-controller.php?id=<?=$row['masofmas_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+															data-whatever="<?=$row['dest_id']?>" >Edit</a>
+															<a href="mas-destination-controller.php?id=<?=$row['dest_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
 														</td>
 													</tr>
 												<?PHP
@@ -189,13 +190,13 @@
 					<i class="icon-append fa fa-times"></i>
 				</button>
 				<h4 class="header">
-				Type of Master
+					Destination
 				</h4>
 			</div>
 			<div class="modal-body no-padding">
-				<form id="user-form" class="smart-form" method="POST" action="mas-masofmas-controller.php">
+				<form id="user-form" class="smart-form" method="POST" action="mas-destination-controller.php">
 					<header>
-							Please Specify...
+				Please Specify...
 					</header>
 					<fieldset>
 						<section>
@@ -203,13 +204,34 @@
 								<label class="label col col-2">Name</label>
 								<div class="col col-10">
 									<label class="input required">
-										<input type="text" name="txbmasofmas_name" id="txbmasofmas_name">
+										<input type="text" name="txbdest_name" id="txbdest_name" maxlength="45">
 									</label>
 								</div>
 							</div>
+						</section>
+						<section>
+							<div class="row">
+								<label class="label col col-2">DestinationID</label>
+								<div class="col col-10">
+									<label class="input required">
+										<input type="text" name="txbdestcoun_id" id="txbdestcoun_id" maxlength="3">
+									</label>
+								</div>
+							</div>
+						</section>
+					<!--<section>
+							<div class="row">
+								<label class="label col col-2">Remark</label>
+								<div class="col col-10">
+									<label class="input">
+										<textarea rows="3" name="txbconf_remark" id="txbconf_remark"></textarea>
+									</label>
+								</div>
+							</div>
+						</section>-->
 					</fieldset>
 					<footer class="center">
-						<input type="hidden" name="masofmas_id" id="masofmas_id" />
+						<input type="hidden" name="dest_id" id="dest_id" />
 						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
 							Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
@@ -276,7 +298,7 @@
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var recipient = button.data('whatever') // Extract info from data-* attributes
 			var modal = $(this);
-			var dataString = 'masofmas_id=' + recipient;
+			var dataString = 'dest_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
 
@@ -287,12 +309,14 @@
 
                 success: function (data) {
 					if(data != null){
-						$('#masofmas_id').val(data.masofmas_id);
-						$('#txbmasofmas_name').val(data.masofmas_name);
-						$('#submitAdd').val("Update");
+						$('#dest_id').val(data.dest_id);
+						$('#txbdest_name').val(data.dest_name);
+						$('#txbdestcoun_id').val(data.destcoun_id);
+					$('#submitAdd').val("Update");
 					}else{
-						$('#masofmas_id').val('');
-						$('#txbmasofmas_name').val('');
+						$('#dest_id').val('');
+						$('#txbdest_name').val('');
+						$('#txbdestcoun_id').val('');
 						$('#submitAdd').val("Insert");
 					}
 				},
@@ -333,15 +357,21 @@
 		    },
 			// Rules for form validation
 			rules : {
-				txbmasofmas_name : {
+				txbdest_name : {
+					required : true
+				},
+				txbdestcoun_id :{
 					required : true
 				}
 			},
 
 			// Messages for form validation
 			messages : {
-				txbmasofmas_name : {
-					required : 'Please fill Type Of Master name'
+			txbdest_name : {
+					required : 'Please fill agentcountry code'
+				},
+			txbdestcoun_id : {
+					required : 'Please fill agentcountry name'
 				}
 			},
 

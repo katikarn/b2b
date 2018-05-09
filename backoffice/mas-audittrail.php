@@ -15,7 +15,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 
-	$page_title = "Type Of Master";
+	$page_title = "Audit trait";
 
 	/* ---------------- END PHP Custom Scripts ------------- */
 
@@ -27,7 +27,7 @@
 
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["All Master"]["sub"]["Type Of Master"]["active"] = true;
+	$page_nav["Setting"]["sub"]["Audit Trail"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -106,7 +106,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-					Type Of Master
+					Audit Trail
 				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
@@ -138,10 +138,12 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">Name</th>
-											<th data-hide="phone">Last Update</th>
-											<th data-hide="phone">Update By</th>
-											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
+											<th data-class="expand">Type</th>
+											<th data-hide="phone">Detail</th>
+											<th data-hide="phone">IP</th>
+											<th data-hide="phone">Create_datetime</th>
+											<th data-hide="phone">Create_by</th>
+										<!--	<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>-->
 										</tr>
 									</thead>
 									<tbody>
@@ -149,22 +151,23 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT masofmas_id, masofmas_name, update_datetime, update_by
-													FROM tb_masofmas_ms";
+											$sql = "SELECT audit_id, audit_type, audit_detail, audit_ip, create_datetime, create_by FROM tb_auditlog_tr";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
 												while($row = mysqli_fetch_assoc($result))	{?>
 													<tr>
-														<td><?=$row['masofmas_name']?></td>
-														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
-														<td><?=$row['update_by']?></td>
-														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
+														<td><?=$row['audit_type']?></td>
+														<td><?=$row['audit_detail']?></td>
+														<td><?=$row['audit_ip']?></td>
+													<td><?=date("d/m/Y", strtotime($row['create_datetime']))." ".date("H:i", strtotime($row['create_datetime']))?></td>
+													<td><?=$row['create_by']?></td>
+														<!--<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['masofmas_id']?>" >Edit</a>
-															<a href="mas-masofmas-controller.php?id=<?=$row['masofmas_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
-														</td>
+															data-whatever="<?=$row['audit_id']?>" >Edit</a>
+															<a href="mas-config-controller.php?id=<?=$row['conf_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+														</td>-->
 													</tr>
 												<?PHP
 												}
@@ -189,27 +192,48 @@
 					<i class="icon-append fa fa-times"></i>
 				</button>
 				<h4 class="header">
-				Type of Master
+				Audit Trail
 				</h4>
 			</div>
 			<div class="modal-body no-padding">
-				<form id="user-form" class="smart-form" method="POST" action="mas-masofmas-controller.php">
+				<form id="user-form" class="smart-form" method="POST" action="mas-audittrail-controller.php">
 					<header>
-							Please Specify...
+					Please
 					</header>
 					<fieldset>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Name</label>
+								<label class="label col col-2">Type</label>
 								<div class="col col-10">
 									<label class="input required">
-										<input type="text" name="txbmasofmas_name" id="txbmasofmas_name">
+										<input type="text" name="txbaudit_type" id="txbaudit_type">
 									</label>
 								</div>
 							</div>
+						</section>
+						<section>
+							<div class="row">
+								<label class="label col col-2">details</label>
+								<div class="col col-10">
+									<label class="input required">
+										<input type="text" name="txbaudit_detail" id="txbaudit_detail">
+									</label>
+								</div>
+							</div>
+						</section>
+						<section>
+							<div class="row">
+								<label class="label col col-2">IP</label>
+								<div class="col col-10">
+									<label class="input">
+										<textarea rows="3" name="txbaudit_ip" id="txbaudit_ip"></textarea>
+									</label>
+								</div>
+							</div>
+						</section>
 					</fieldset>
 					<footer class="center">
-						<input type="hidden" name="masofmas_id" id="masofmas_id" />
+						<input type="hidden" name="audit_id" id="audit_id" />
 						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
 							Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
@@ -276,7 +300,7 @@
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var recipient = button.data('whatever') // Extract info from data-* attributes
 			var modal = $(this);
-			var dataString = 'masofmas_id=' + recipient;
+			var dataString = 'audit_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
 
@@ -287,12 +311,16 @@
 
                 success: function (data) {
 					if(data != null){
-						$('#masofmas_id').val(data.masofmas_id);
-						$('#txbmasofmas_name').val(data.masofmas_name);
+						$('#audit_id').val(data.audit_id);
+						$('#txbaudit_type').val(data.audit_type);
+						$('#txbaudit_detail').val(data.audit_detail);
+						$('#txbaudit_ip').val(data.audit_ip);
 						$('#submitAdd').val("Update");
 					}else{
-						$('#masofmas_id').val('');
-						$('#txbmasofmas_name').val('');
+						$('#audit_id').val('');
+						$('#txbaudit_type').val('');
+						$('#txbaudit_detail').val('');
+						$('#txbaudit_ip').val('');
 						$('#submitAdd').val("Insert");
 					}
 				},
@@ -304,70 +332,76 @@
 		});
 
 		//// --------------------------- Validate------------------------------
-		var errorClass = 'invalid';
-		var errorElement = 'em';
+	//	var errorClass = 'invalid';
+		//var errorElement = 'em';
 
-		var $contactForm = $("#user-form").validate({
-			errorClass		: errorClass,
-			errorElement	: errorElement,
-			highlight: function(element) {
-		        $(element).parent().removeClass('state-success').addClass('state-error');
+	//	var $contactForm = $("#user-form").validate({
+		//	errorClass		: errorClass,
+		//	errorElement	: errorElement,
+		//	highlight: function(element) {
+		  //      $(element).parent().removeClass('state-success').addClass('state-error');
 		        //$(element).parent().addClass("required");
-		        if($(element).parent().hasClass( "required" )){
-		        	 $(element).parent().css("border-left", "7px solid #FF3333");
-		        }
-		        $(element).removeClass('valid');
-		    },
-		    unhighlight: function(element) {
-		        $(element).parent().removeClass('state-error').addClass('state-success');
+		  //      if($(element).parent().hasClass( "required" )){
+		   //     	 $(element).parent().css("border-left", "7px solid #FF3333");
+		    //    }
+		    //    $(element).removeClass('valid');
+		  //  },
+		  //  unhighlight: function(element) {
+		 //       $(element).parent().removeClass('state-error').addClass('state-success');
 		        //$(element).parent().removeClass("required");
-		        if($(element).parent().hasClass( "required" )){
-		        	$(element).parent().css("border-left", "7px solid #047803");
-		        }
-		        $(element).addClass('valid');
-		    },
-		    submitHandler : function(form) {
-		      if (confirm("Do you want to save the data?")) {
-		        form.submit();
-		      }
-		    },
+		 //       if($(element).parent().hasClass( "required" )){
+		  //      	$(element).parent().css("border-left", "7px solid #047803");
+		  //      }
+		  //      $(element).addClass('valid');
+		  //  },
+		  //  submitHandler : function(form) {
+		  //    if (confirm("Do you want to save the data?")) {
+		  //      form.submit();
+		 //     }
+		   // },
 			// Rules for form validation
-			rules : {
-				txbmasofmas_name : {
-					required : true
-				}
-			},
+		//	rules : {
+		//		txbconf_name : {
+		//			required : true
+		//		},
+		//		txbconf_value :{
+		//			required : true
+		//		}
+		//	},
 
 			// Messages for form validation
-			messages : {
-				txbmasofmas_name : {
-					required : 'Please fill Type Of Master name'
-				}
-			},
+		//	messages : {
+		//		txbconf_name : {
+			//		required : 'Please fill config name'
+			//	},
+		//		txbconf_value : {
+		//			required : 'Please fill config value'
+			//	}
+		//	},
 
 			// Do not change code below
-			errorPlacement : function(error, element) {
-				error.insertAfter(element.parent());
-			}
-		});
+		//	errorPlacement : function(error, element) {
+		//		error.insertAfter(element.parent());
+	//		}
+	//	});
 
-		$.validator.addMethod('haveNumber', function(value, element) {
-	        return value.match(/\d/)
-	    }, '');
-	    $.validator.addMethod("notEqual", function(value, element, param) {
-	    	var check = true;
-	    	var isCheck = $('#submitAdd').val();
-	    	for (var i = 0; i < storeUsername.length; i++) {
+	//	$.validator.addMethod('haveNumber', function(value, element) {
+	   //     return value.match(/\d/)
+	  //  }, '');
+	  //  $.validator.addMethod("notEqual", function(value, element, param) {
+	  //  	var check = true;
+	    //	var isCheck = $('#submitAdd').val();
+	   // 	for (var i = 0; i < storeUsername.length; i++) {
 	    		//console.log(storeUsername[i]);
-	    		if(value == storeUsername[i] && isCheck == "Insert")
-	    		{
-	    			check = false;
-	    		}
-	    	}
-		  return check;
-		}, "");
+	   // 		if(value == storeUsername[i] && isCheck == "Insert")
+	    //		{
+	    	//		check = false;
+	   // 		}
+	   // 	}
+		//  return check;
+//		}, "");
 
-	});
+	//});
 
 	/* END BASIC */
 	function resetModal(){

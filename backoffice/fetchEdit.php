@@ -42,11 +42,32 @@
 		echo json_encode($row);
 	}
 
-	if(isset($_POST["currency_id"]))  
-	{  
+	if(isset($_POST["currency_id"]))
+	{
 		$query = 	"SELECT * FROM tb_currency_ms WHERE currency_id = '".$_POST["currency_id"]."'";
-		$result = mysqli_query($_SESSION['conn'], $query);  
-		$row = mysqli_fetch_array($result);  
+		$result = mysqli_query($_SESSION['conn'], $query);
+		$row = mysqli_fetch_array($result);
+		echo json_encode($row);
+	}
+	if(isset($_POST["dest_id"]))
+	{
+		$query = 	"SELECT * FROM tb_dest_ms WHERE dest_id = '".$_POST["dest_id"]."'";
+		$result = mysqli_query($_SESSION['conn'], $query);
+		$row = mysqli_fetch_array($result);
+		echo json_encode($row);
+	}
+	if(isset($_POST["destcoun_id"]))
+	{
+		$query = 	"SELECT * FROM tb_dest_country_ms WHERE destcoun_id = '".$_POST["destcoun_id"]."'";
+		$result = mysqli_query($_SESSION['conn'], $query);
+		$row = mysqli_fetch_array($result);
+		echo json_encode($row);
+	}
+	if(isset($_POST["audit_id"]))
+	{
+		$query = 	"SELECT * FROM tb_auditlog_tr WHERE audit_id = '".$_POST["audit_id"]."'";
+		$result = mysqli_query($_SESSION['conn'], $query);
+		$row = mysqli_fetch_array($result);
 		echo json_encode($row);
 	}
 
