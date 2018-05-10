@@ -109,9 +109,6 @@
 			Country of	Destination
 				</h1>
 			</div>
-			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-				Please Specify...
-			</div>
 		</div>
 
 		<!-- widget grid -->
@@ -138,9 +135,9 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">DestcounCode </th> <!--เพิ่ม-->
-											<th data-hide="phone">destcounname</th> <!--ซ่อน-->
-											<th data-hide="phone">Datetime</th>
+											<th data-class="expand">Country Code </th> <!--เพิ่ม-->
+											<th data-hide="phone">Country Name</th> <!--ซ่อน-->
+											<th data-hide="phone">Update Datetime</th>
 											<th data-hide="phone">Update By</th>
 											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
 										</tr>

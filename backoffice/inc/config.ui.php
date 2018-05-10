@@ -118,7 +118,7 @@ $page_nav = array(
 		"sub" => array(
 			"Agent List" => array(
 				"title" => "Agent List",
-				"url" => APP_URL."/#"
+				"url" => APP_URL."/agent.php"
 			),
 			"Agent wait for approve" => array(
 				"title" => "Agent wait for approve",

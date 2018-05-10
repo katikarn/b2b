@@ -36,7 +36,7 @@
 
 	if(isset($_POST["agentcountry_id"]))
 	{
-		$query = 	"SELECT * FROM tb_agent_country_mas WHERE agentcountry_id = '".$_POST["agentcountry_id"]."'";
+		$query = 	"SELECT * FROM tb_agent_country_ms WHERE agentcountry_id = '".$_POST["agentcountry_id"]."'";
 		$result = mysqli_query($_SESSION['conn'], $query);
 		$row = mysqli_fetch_array($result);
 		echo json_encode($row);

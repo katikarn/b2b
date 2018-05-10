@@ -19,17 +19,19 @@ include("inc/php-audittrail.php");
 					NOW(), '$LoginByUser', NOW(), '$LoginByUser')";
 		}else if($_POST['submitAdd'] == 'Update'){
 			$sql = "UPDATE tb_masofmas_ms SET 
-					conf_name='$txbmasofmas_name',
+					masofmas_name='$txbmasofmas_name',
 					update_datetime=NOW(),
 					update_by='$LoginByUser' 
 					WHERE masofmas_id = '$masofmas_id'";
 		}else{
 			$sql="";
 		}
+		echo $sql;
 		$result = mysqli_query($_SESSION['conn'] ,$sql);
 
 		if(!$result) {
 			echo "<script>alert('Error: Can not save to database')</script>";
+			echo "<script>window.location='mas-masofmas.php'</script>";
 		}else{
 			echo "<script>window.location='mas-masofmas.php'</script>";
 		} 

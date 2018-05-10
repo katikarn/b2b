@@ -1,4 +1,4 @@
-<?php
+<?php 
 	session_start();
 	include("inc/auth.php");
 	include("inc/constant.php");
@@ -6,28 +6,28 @@
 	/////////////////////////////////////////////////////////
 	//initilize the page
 	require_once ("inc/init.php");
-
+	
 	//require UI configuration (nav, ribbon, etc.)
 	require_once ("inc/config.ui.php");
-
+	
 	/*---------------- PHP Custom Scripts ---------
-
+		
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
-
-	$page_title = "Country Of Agent";
-
+	
+	$page_title = "Agent Management";
+	
 	/* ---------------- END PHP Custom Scripts ------------- */
-
+	
 	//include header
 	//you can add your custom css in $page_css array.
 	//Note: all css files are inside css/ folder
 	$page_css[] = "your_style.css";
 	include ("inc/header.php");
-
+	
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["Master of Agent"]["sub"]["Country of Agent"]["active"] = true;
+	$page_nav["Agent"]["sub"]["Agent List"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -35,31 +35,31 @@
 	.header{
 		font-weight:bold !important;
 	}
-
+	
 	.row{
 		margin-bottom:10px;
 	}
-
+	
 	#dt_basic{
 		margin-top: 0px !important;
 	}
-
+	
 	.status span{
 		color:#fff;
 		border-radius: 4px;
 		border: 1px solid #ccc;
 		padding: 2px;
 	}
-
+	
 	.modal-header{
 		background-color: royalblue;
 		color: #fff;
 	}
-
+	
 	.center{
 		text-align:	center;
 	}
-
+	
 	input[type=text], select, input[type=email], textarea{
 		width: 100%;
 		padding: 5px;
@@ -67,7 +67,7 @@
 		border: 1px solid #ccc;
 		border-radius: 4px;
 	}
-
+	
 	textarea{
 		resize:none;
 		border-radius: 0px !important;
@@ -81,90 +81,124 @@
 	.required{
 		border-left: 7px solid #FF3333;
 	}
-
+	
 	@media only screen and (max-width: 320px) {
 	    label.radio {
 	        margin-right: 15px !important;
 	    }
 	}
-
+	
 </style>
 <!-- ==========================CONTENT STARTS HERE ========================== -->
 <!-- MAIN PANEL -->
 <div id="main" role="main">
-
+	
 	<?php
 		//configure ribbon (breadcrumbs) array("name"=>"url"), leave url empty if no url
 		//$breadcrumbs["New Crumb"] => "http://url.com"
 		$breadcrumbs["Setup"] = "";
 		include("inc/ribbon.php");
 	?>
-
+	
 	<!-- MAIN CONTENT -->
 	<div id="content">
-
+		
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-				Country of Agent
+					Agent Management
 				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-
+				
 			</div>
 		</div>
-
+		
 		<!-- widget grid -->
 		<section id="widget-grid" class="">
-
+			
 			<!-- row -->
 			<div class="row">
-
+				
 				<!-- NEW WIDGET START -->
 				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
+					
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
-							Keyword<br/> <!--เริ่มทำโปรเจค-->
+							Keywoard<br/>
 							<input id="column3_search" type="text" name="googlesearch">
 						</div>
+						<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 status smart-form" style="padding-top: 25px;">
+							<div class="checkbox"  style="padding-left: 0px;">
+								<div class="col-xs-3 col-md-3">
+									<label class="checkbox">
+										<input type="checkbox" name="status" id="StatusW" value="Wait for Approve" onclick="filterCheckbox();" checked ><i></i><span style="background-color: teal">Wait for Approve</span></label>
+								</div>
+								<div class="col-xs-2 col-md-2">
+									<label class="checkbox">
+										<input type="checkbox" name="status" id="StatusA" value="Active" onclick="filterCheckbox();" checked ><i></i><span style="background-color: Green">Active</span></label>
+								</div>
+								<div class="col-xs-2 col-md-2">
+									<label class="checkbox">
+										<input type="checkbox" name="status" id="StatusI" value="Inactive" onclick="filterCheckbox();" checked ><i></i><span style="background-color: red">Inactive</span></label>
+								</div>
+								<div class="col-xs-2 col-md-2">
+									<label class="checkbox">
+										<input type="checkbox" name="status" id="StatusC" value="Cancel" onclick="filterCheckbox();" checked ><i></i><span style="background-color: Orange">Cancel</span></label>
+								</div>
+								<div class="col-xs-2 col-md-2">
+									<label class="checkbox">
+										<input type="checkbox" name="status" id="StatusU" value="Cancel" onclick="filterCheckbox();" checked ><i></i><span style="background-color: purple">Unapprove</span></label>
+								</div>
+							</div>
+						</div>
 					</div>
-
+					
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
-
+								
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
-									<thead>
-										<tr class="header">
-											<th data-class="expand">Country Code</th> <!--เพิ่ม-->
-											<th data-hide="phone">Country Name</th> <!--ซ่อน-->
-											<th data-hide="phone">Datetime</th>
-											<th data-hide="phone">Update By</th>
-											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
+									<thead>			                
+									<tr class="header">
+											<th data-hide="phone">ID</th>
+											<th data-class="expand">Name</th>
+											<th data-hide="phone">Country</th>
+											<th data-hide="phone">Email</th>
+											<th data-hide="phone">Tel</th>
+											<th data-hide="phone">Status</th>
+											<th class="center"><a href="agent-addedit.php" class="btn btn-small btn-success">Add new</a></th>
 										</tr>
 									</thead>
 									<tbody>
-										<script type="text/javascript">
-											var storeUsername = [];
-										</script>
 										<?PHP
-											$sql = "SELECT agentcountry_id, agentcountry_code, agentcountry_name, update_by,update_datetime,create_by FROM tb_agent_country_ms";
+											$sql = "SELECT agent_id, agent_status, agent_name, agentcountry_name,
+													agent_contact_email, agent_contact_tel
+													FROM tb_agent_tr, tb_agent_country_ms
+													WHERE tb_agent_tr.agentcountry_id = tb_agent_country_ms.agentcountry_id";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
-												while($row = mysqli_fetch_assoc($result))	{?>
+												while($row = mysqli_fetch_assoc($result)){
+													if($row['agent_status'] == 'A'){
+														$statusUser = '<font color="green">Active</font>';
+													}else if($row['agent_status'] == 'I'){
+														$statusUser = '<font color="red">Inactive</font>';
+													}else if($row['agent_status'] == 'C'){
+														$statusUser = '<font color="red">Cancel</font>';
+													}
+													?>
 													<tr>
-														<td><?=$row['agentcountry_code']?></td>
+														<td><?=substr("00000000",1,4-strlen($row['agent_id'])).$row['agent_id']?></td>
+														<td><?=$row['agent_name']?></td>
 														<td><?=$row['agentcountry_name']?></td>
-														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
-														<td><?=$row['update_by']?></td>
-														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
-															data-toggle="modal"
-															data-target="#myModal"
-															data-whatever="<?=$row['agentcountry_id']?>" >Edit</a>
-															<a href="mas-countryagent-controller.php?id=<?=$row['agentcountry_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+														<td><?=$row['agent_contact_email']?></td>
+														<td><?=$row['agent_contact_tel']?></td>
+														<td><?=$statusUser?></td>
+														<td class="center">
+															<a href="agent-addedit.php?id=<?=$row['agent_id']?>" class="btn btn-small btn-success">Edit</a>
+															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
 														</td>
 													</tr>
 												<?PHP
@@ -172,76 +206,15 @@
 											}
 										?>
 									</tbody>
-								</table>
-							</div>
+								</table>								
+							</div>					
 						</div>
 					</div>
 				</article>
 			</div>
-		</section>
+		</section>		
 	</div>
 </div>
-<!-- END MAIN PANEL -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					<i class="icon-append fa fa-times"></i>
-				</button>
-				<h4 class="header">
-					User
-				</h4>
-			</div>
-			<div class="modal-body no-padding">
-				<form id="user-form" class="smart-form" method="POST" action="mas-countryagent-controller.php">
-					<header>
-					Country Of agent
-					</header>
-					<fieldset>
-						<section>
-							<div class="row">
-								<label class="label col col-2">code</label>
-								<div class="col col-10">
-									<label class="input required">
-										<input type="text" name="txbagentcountry_code" id="txbagentcountry_code" maxlength="3">
-									</label>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="row">
-								<label class="label col col-2">Name</label>
-								<div class="col col-10">
-									<label class="input required">
-										<input type="text" name="txbagentcountry_name" id="txbagentcountry_name" maxlength="45">
-									</label>
-								</div>
-							</div>
-						</section>
-					<!--<section>
-							<div class="row">
-								<label class="label col col-2">Remark</label>
-								<div class="col col-10">
-									<label class="input">
-										<textarea rows="3" name="txbconf_remark" id="txbconf_remark"></textarea>
-									</label>
-								</div>
-							</div>
-						</section>-->
-					</fieldset>
-					<footer class="center">
-						<input type="hidden" name="agentcountry_id" id="agentcountry_id" />
-						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
-							Save</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
-							Cancel</button>
-					</footer>
-				</form>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <?php //include required scripts
 	include ("inc/scripts.php");
@@ -255,21 +228,21 @@
 <script src="<?php echo ASSETS_URL; ?>/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 
 <script type="text/javascript">
-
+	
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	var otable;
 	$(document).ready(function() {
-
+		
 		/* BASIC ;*/
 		var responsiveHelper_dt_basic = undefined;
-
+		
 		var breakpointDefinition = {
 			tablet : 1024,
 			phone : 480
 		};
-
+		
 		$('#dt_basic').dataTable({
-			"sDom":
+			"sDom": 
 			"t"+
 			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
@@ -289,7 +262,7 @@
 		/* Custom Search box*/
 		var table_dtbasic = $('#dt_basic').DataTable();
 		otable = $('#dt_basic').dataTable();
-
+		
 		$( "#column3_search" ).keyup(function() {
 			//alert( "Handler for .keyup() called." );
 			table_dtbasic.search( this.value ).draw();
@@ -298,32 +271,41 @@
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var recipient = button.data('whatever') // Extract info from data-* attributes
 			var modal = $(this);
-			var dataString = 'agentcountry_id=' + recipient;
+			var dataString = 'user_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
-
+                
                 url: "fetchEdit.php",
 				type:"POST",
                 data: dataString,
 				dataType : 'json',
-
+                
                 success: function (data) {
-					if(data != null)	{
-						$('#agentcountry_id').val(data.agentcountry_id);
-						$('#txbagentcountry_code').val(data.agentcountry_code);
-						$('#txbagentcountry_name').val(data.agentcountry_name);
-						$('#submitAdd').val('Update');
+					if(data != null){
+						$('#user_id').val(data.user_id);						
+						$('#chkuser_status_' + data.user_status).prop('checked',true);
+						$('#lsbuser_type').val(data.user_type);  
+						$('#txbuser_email').val(data.user_email); 
+						$('#txbusername').val(data.username);
+						$('#txbpassword').val(data.password);
+						$('#txbuser_remark').val(data.user_remark);  
+						$('#submitAdd').val("Update");  
 					}else{
-						$('#agentcountry_id').val('');
-						$('#txbagentcountry_code').val('');
-						$('#txbagentcountry_name').val('');
-						$('#submitAdd').val('Insert');
+						$('#user_id').val('');			
+						$('#chkuser_status_A').prop('checked',true);
+						$('#lsbuser_type').val('');  
+						$('#txbuser_email').val(''); 
+						$('#txbusername').val('');
+						$('#txbpassword').val('');
+						$('#txbuser_remark').val('');  
+						$('#submitAdd').val("Insert");
 					}
 				},
                 error: function(err) {
                     console.log('err : '+err);
+					
 				}
-			});
+			});  
 		});
 
 		//// --------------------------- Validate------------------------------
@@ -356,21 +338,43 @@
 		    },
 			// Rules for form validation
 			rules : {
-				txbagentcountry_code : {
-					required : true
+				lsbuser_type : {
+					required : true,
 				},
-				txbagentcountry_name :{
-					required : true
+				username : {
+					required : true,
+					minlength : 4,
+					notEqual: true
+				},
+				password :{
+					required : true,
+					minlength : 6,
+					haveNumber: true
+				},
+				txbuser_email :{
+					required : true,
+					email : true
 				}
 			},
 
 			// Messages for form validation
 			messages : {
-				txbagentcountry_code : {
-					required : 'Please fill agentcountry code'
+				lsbuser_type : {
+					required : 'Please select user type',
 				},
-				txbagentcountry_name : {
-					required : 'Please fill agentcountry name'
+				username : {
+					required : 'Please fill your Username',
+					minlength: 'Username must more than 6 character ',
+					notEqual: 'Username must not duplicate'
+				},
+				password :{
+					required : 'Please fill your Password',
+					minlength: 'Password must more than 6 character',
+					haveNumber: 'Password must more less than 1 number'
+				},
+				txbuser_email :{
+					required : 'Please fill your email address',
+					email : 'Email format incorrect'
 				}
 			},
 
@@ -385,7 +389,7 @@
 	    }, '');
 	    $.validator.addMethod("notEqual", function(value, element, param) {
 	    	var check = true;
-	    	var isCheck = $('#submitAdd').val();
+	    	var isCheck = $('#submitAdd').val(); 
 	    	for (var i = 0; i < storeUsername.length; i++) {
 	    		//console.log(storeUsername[i]);
 	    		if(value == storeUsername[i] && isCheck == "Insert")
@@ -394,15 +398,25 @@
 	    		}
 	    	}
 		  return check;
-		}, "");
+		}, "");		
 
 	});
 
 	/* END BASIC */
+	function filterCheckbox(){
+		
+		var types = $('input:checkbox[name="status"]:checked').map(function() {
+    		return '^' + this.value + '\$';
+		}).get().join('|');
+		//filter in column 0, with an regex, no smart filtering, no inputbox,not case sensitive
+		//console.log(types);
+		otable.fnFilter(types, 3, true, false, false, false);
+	}
+
 	function resetModal(){
 		$( "#user-form" ).find( ".state-error" ).removeClass( "state-error" );
 		$( "#user-form" ).find( ".state-success" ).removeClass( "state-success" );
 		$( "#user-form" ).find( ".required" ).css("border-left", "7px solid #FF3333");
 		$( "em" ).remove();
 	}
-</script>
+</script>																												
