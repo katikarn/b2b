@@ -11,19 +11,19 @@ include("inc/connectionToMysql.php");
 
         //Variable from the user
 			$txbdest_name = $_POST["txbdest_name"];
-			$txbdestcoun_id = $_POST["txbdestcoun_id"];
+			$lsbdest_id = $_POST["lsbdest_id"];
     	$LoginByUser = trim($_SESSION['LoginUser']);
 
 		if($_POST['submitAdd'] == 'Insert'){
 			$sql = "INSERT INTO tb_dest_ms(dest_name, destcoun_id, create_datetime, create_by, update_datetime, update_by)
-					VALUES ('$txbdest_name','$txbdestcoun_id', NOW(), '$LoginByUser', NOW(), '$LoginByUser')";
+					VALUES ('$txbdest_name','$lsbdest_id', NOW(), '$LoginByUser', NOW(), '$LoginByUser')";
 		}else if($_POST['submitAdd'] == 'Update'){
 			$sql = "UPDATE tb_dest_ms SET
 					dest_name='$txbdest_name',
-					 destcoun_id='$txb destcoun_id',
+					dest_id='$lsbdest_id',
 					update_datetime=NOW(),
 					update_by='$LoginByUser'
-					WHERE dest_id= '$dest_id'";
+					WHERE dest_id= '$lsbdest_id'";
 		}else{
 			$sql="";
 		}
@@ -42,7 +42,7 @@ include("inc/connectionToMysql.php");
         $sql = "DELETE FROM tb_dest_ms WHERE dest_id = '".$_GET['id']."'";
         $result = mysqli_query($_SESSION['conn'] ,$sql);
         if(!$result) {
-            echo "<script>alert('Failed to delete.This supplier is already used.!'); window.location='mas-destination.php'</script>";
+           echo "<script>alert('Failed to delete.This supplier is already used.!'); window.location='mas-destination.php'</script>";
 		}
 		echo "<script>window.location='mas-destination.php'</script>";
     }

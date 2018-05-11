@@ -214,7 +214,19 @@
 								<label class="label col col-2">DestinationID</label>
 								<div class="col col-10">
 									<label class="input required">
-										<input type="text" name="txbdestcoun_id" id="txbdestcoun_id" maxlength="3">
+										<select type="text" name="lsbdest_id" id="lsbdest_id" maxlength="3">
+										<option value="" selected></option>
+										<?php
+											$sql = "SELECT dest_id, dest_name FROM tb_dest_ms	ORDER BY dest_name ";
+											$result = mysqli_query($conn ,$sql);
+											if(mysqli_num_rows($result) > 0)	{
+												//show data for each row
+												while($row = mysqli_fetch_assoc($result))	{?>
+													<option value="<?=$row['dest_id'];?>">
+													<?=$row['dest_name']; ?></option>
+												<?php }
+											}?>
+										</select>
 									</label>
 								</div>
 							</div>

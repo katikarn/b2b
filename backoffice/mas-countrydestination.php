@@ -208,7 +208,7 @@
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Name</label>
+								<label class="label col col-2">Country Name</label>
 								<div class="col col-10">
 									<label class="input required">
 										<input type="text" name="txbdestcoun_name" id="txbdestcoun_name" maxlength="45">

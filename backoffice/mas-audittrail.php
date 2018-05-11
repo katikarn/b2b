@@ -162,12 +162,6 @@
 														<td><?=$row['audit_ip']?></td>
 													<td><?=date("d/m/Y", strtotime($row['create_datetime']))." ".date("H:i", strtotime($row['create_datetime']))?></td>
 													<td><?=$row['create_by']?></td>
-														<!--<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
-															data-toggle="modal"
-															data-target="#myModal"
-															data-whatever="<?=$row['audit_id']?>" >Edit</a>
-															<a href="mas-config-controller.php?id=<?=$row['conf_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
-														</td>-->
 													</tr>
 												<?PHP
 												}
@@ -331,77 +325,77 @@
 			});
 		});
 
-		//// --------------------------- Validate------------------------------
-	//	var errorClass = 'invalid';
-		//var errorElement = 'em';
+		// --------------------------- Validate------------------------------
+		var errorClass = 'invalid';
+		var errorElement = 'em';
 
-	//	var $contactForm = $("#user-form").validate({
-		//	errorClass		: errorClass,
-		//	errorElement	: errorElement,
-		//	highlight: function(element) {
-		  //      $(element).parent().removeClass('state-success').addClass('state-error');
+		var $contactForm = $("#user-form").validate({
+			errorClass		: errorClass,
+			errorElement	: errorElement,
+			highlight: function(element) {
+		       $(element).parent().removeClass('state-success').addClass('state-error');
 		        //$(element).parent().addClass("required");
-		  //      if($(element).parent().hasClass( "required" )){
-		   //     	 $(element).parent().css("border-left", "7px solid #FF3333");
-		    //    }
-		    //    $(element).removeClass('valid');
-		  //  },
-		  //  unhighlight: function(element) {
-		 //       $(element).parent().removeClass('state-error').addClass('state-success');
+		       if($(element).parent().hasClass( "required" )){
+		       	 $(element).parent().css("border-left", "7px solid #FF3333");
+		       }
+		       $(element).removeClass('valid');
+		   },
+		   unhighlight: function(element) {
+		       $(element).parent().removeClass('state-error').addClass('state-success');
 		        //$(element).parent().removeClass("required");
-		 //       if($(element).parent().hasClass( "required" )){
-		  //      	$(element).parent().css("border-left", "7px solid #047803");
-		  //      }
-		  //      $(element).addClass('valid');
-		  //  },
-		  //  submitHandler : function(form) {
-		  //    if (confirm("Do you want to save the data?")) {
-		  //      form.submit();
-		 //     }
-		   // },
-			// Rules for form validation
-		//	rules : {
-		//		txbconf_name : {
-		//			required : true
-		//		},
-		//		txbconf_value :{
-		//			required : true
-		//		}
-		//	},
+		       if($(element).parent().hasClass( "required" )){
+		       	$(element).parent().css("border-left", "7px solid #047803");
+		       }
+		       $(element).addClass('valid');
+		   },
+		   submitHandler : function(form) {
+		     if (confirm("Do you want to save the data?")) {
+		       form.submit();
+		     }
+		   },
+			//Rules for form validation
+			rules : {
+				txbconf_name : {
+					required : true
+				},
+				txbconf_value :{
+					required : true
+				}
+			},
 
-			// Messages for form validation
-		//	messages : {
-		//		txbconf_name : {
-			//		required : 'Please fill config name'
-			//	},
-		//		txbconf_value : {
-		//			required : 'Please fill config value'
-			//	}
-		//	},
+			//Messages for form validation
+			messages : {
+				txbconf_name : {
+					required : 'Please fill config name'
+				},
+				txbconf_value : {
+					required : 'Please fill config value'
+				}
+			},
 
-			// Do not change code below
-		//	errorPlacement : function(error, element) {
-		//		error.insertAfter(element.parent());
-	//		}
-	//	});
+		//	Do not change code below
+			errorPlacement : function(error, element) {
+				error.insertAfter(element.parent());
+			}
+		});
 
-	//	$.validator.addMethod('haveNumber', function(value, element) {
-	   //     return value.match(/\d/)
-	  //  }, '');
-	  //  $.validator.addMethod("notEqual", function(value, element, param) {
-	  //  	var check = true;
-	    //	var isCheck = $('#submitAdd').val();
-	   // 	for (var i = 0; i < storeUsername.length; i++) {
-	    		//console.log(storeUsername[i]);
-	   // 		if(value == storeUsername[i] && isCheck == "Insert")
-	    //		{
-	    	//		check = false;
-	   // 		}
-	   // 	}
-		//  return check;
-//		}, "");
+		$.validator.addMethod('haveNumber', function(value, element) {
+	       return value.match(/\d/)
+	   }, '');
+	   $.validator.addMethod("notEqual", function(value, element, param) {
+	   	var check = true;
+	    	var isCheck = $('#submitAdd').val();
+	   	for (var i = 0; i < storeUsername.length; i++) {
+	    		console.log(storeUsername[i]);
+	   		if(value == storeUsername[i] && isCheck == "Insert")
+	    		{
+	    			check = false;
+	   		}
+	   	}
+		 return check;
+		}, "");
 
-	//});
+	});
 
 	/* END BASIC */
 	function resetModal(){
