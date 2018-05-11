@@ -15,7 +15,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 
-	$page_title = "Country of Destination";
+	$page_title = "Country Destination";
 
 	/* ---------------- END PHP Custom Scripts ------------- */
 
@@ -106,8 +106,11 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-			Country of	Destination
+				Country of Destination
 				</h1>
+			</div>
+			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+
 			</div>
 		</div>
 
@@ -122,7 +125,7 @@
 
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
-							Keyword<br/> <!--เริ่มทำโปรเจค-->
+							Keyword<br/>
 							<input id="column3_search" type="text" name="googlesearch">
 						</div>
 					</div>
@@ -135,9 +138,9 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">Country Code </th> <!--เพิ่ม-->
-											<th data-hide="phone">Country Name</th> <!--ซ่อน-->
-											<th data-hide="phone">Update Datetime</th>
+											<th data-class="expand">Country Code</th>
+											<th data-hide="phone">Country Name</th>
+											<th data-hide="phone">Last Update</th>
 											<th data-hide="phone">Update By</th>
 											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
 										</tr>
@@ -147,7 +150,7 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT destcoun_id,destcoun_code,destcoun_name,create_datetime,create_by,update_datetime,update_by from tb_dest_country_ms";
+											$sql = "SELECT destcoun_id,destcoun_code,destcoun_name,create_datetime,create_by,update_datetime,update_by FROM tb_dest_country_ms";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
@@ -187,36 +190,36 @@
 					<i class="icon-append fa fa-times"></i>
 				</button>
 				<h4 class="header">
-				Country of Destination
+				Country of destination
 				</h4>
 			</div>
 			<div class="modal-body no-padding">
 				<form id="user-form" class="smart-form" method="POST" action="mas-countrydestination-controller.php">
 					<header>
-					please specify...
+						Country of destination
 					</header>
 					<fieldset>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Code</label>
+								<label class="label col col-2">Code Country</label>
 								<div class="col col-10">
 									<label class="input required">
-										<input type="text" name="txbdestcoun_code" id="txbdestcoun_code" maxlength="3">
+										<input type="text" name="txbdestcoun_code" id="txbdestcoun_code">
 									</label>
 								</div>
 							</div>
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Country Name</label>
+								<label class="label col col-2">country Name</label>
 								<div class="col col-10">
 									<label class="input required">
-										<input type="text" name="txbdestcoun_name" id="txbdestcoun_name" maxlength="45">
+										<input type="text" name="txbdestcoun_name" id="txbdestcoun_name">
 									</label>
 								</div>
 							</div>
 						</section>
-					<!--<section>
+						<!--<section>
 							<div class="row">
 								<label class="label col col-2">Remark</label>
 								<div class="col col-10">
@@ -228,7 +231,7 @@
 						</section>-->
 					</fieldset>
 					<footer class="center">
-						<input type="hidden" name="dest_id" id="dest_id" />
+						<input type="hidden" name="destcoun_id" id="destcoun_id" />
 						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
 							Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
@@ -299,18 +302,20 @@
 			console.log('dataString :'+dataString);
             $.ajax({
 
-            url: "fetchEdit.php",
-						type:"POST",
-            data: dataString,
-						dataType : 'json',
+                url: "fetchEdit.php",
+				type:"POST",
+                data: dataString,
+				dataType : 'json',
 
-            success: function (data) {
+                success: function (data) {
 					if(data != null){
+						console.log("ค่าที่ได้ออกมา",data);
 						$('#destcoun_id').val(data.destcoun_id);
 						$('#txbdestcoun_code').val(data.destcoun_code);
 						$('#txbdestcoun_name').val(data.destcoun_name);
 						$('#submitAdd').val("Update");
 					}else{
+						console.log("ค่าที่ได้ออกมา",data);
 						$('#destcoun_id').val('');
 						$('#txbdestcoun_code').val('');
 						$('#txbdestcoun_name').val('');
@@ -365,10 +370,10 @@
 			// Messages for form validation
 			messages : {
 				txbdestcoun_code : {
-					required : 'Please fill agentcountry code'
+					required : 'Please fill destcoun code'
 				},
 				txbdestcoun_name : {
-					required : 'Please fill agentcountry name'
+					required : 'Please fill destcoun name'
 				}
 			},
 
