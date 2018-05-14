@@ -116,13 +116,13 @@ $page_nav = array(
 		"title" => "[6] Agent",
 		"icon" => "fa-book",
 		"sub" => array(
+			"Wait for approve" => array(
+				"title" => "Wait for approve",
+				"url" => APP_URL."/agent-status.php"
+			),			
 			"Agent List" => array(
 				"title" => "Agent List",
 				"url" => APP_URL."/agent.php"
-			),
-			"Agent wait for approve" => array(
-				"title" => "Agent wait for approve",
-				"url" => APP_URL."/#"
 			),
 		),
 	),

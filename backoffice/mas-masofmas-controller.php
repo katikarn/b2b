@@ -26,7 +26,6 @@ include("inc/php-audittrail.php");
 		}else{
 			$sql="";
 		}
-		echo $sql;
 		$result = mysqli_query($_SESSION['conn'] ,$sql);
 
 		if(!$result) {

@@ -148,7 +148,7 @@
 								</div>
 								<div class="col-xs-2 col-md-2">
 									<label class="checkbox">
-										<input type="checkbox" name="status" id="StatusU" value="Cancel" onclick="filterCheckbox();" checked ><i></i><span style="background-color: purple">Unapprove</span></label>
+										<input type="checkbox" name="status" id="StatusU" value="Unapprove" onclick="filterCheckbox();" checked ><i></i><span style="background-color: purple">Unapprove</span></label>
 								</div>
 							</div>
 						</div>
@@ -187,10 +187,14 @@
 														$statusUser = '<font color="red">Inactive</font>';
 													}else if($row['agent_status'] == 'C'){
 														$statusUser = '<font color="red">Cancel</font>';
+													}else if($row['agent_status'] == 'W'){
+														$statusUser = '<font color="teal">Wait for Approve</font>';
+													}else if($row['agent_status'] == 'U'){
+														$statusUser = '<font color="purple">Unapprove</font>';
 													}
 													?>
 													<tr>
-														<td><?=substr("00000000",1,4-strlen($row['agent_id'])).$row['agent_id']?></td>
+														<td>A<?=substr("00000000",1,4-strlen($row['agent_id'])).$row['agent_id']?></td>
 														<td><?=$row['agent_name']?></td>
 														<td><?=$row['agentcountry_name']?></td>
 														<td><?=$row['agent_contact_email']?></td>
@@ -409,8 +413,8 @@
     		return '^' + this.value + '\$';
 		}).get().join('|');
 		//filter in column 0, with an regex, no smart filtering, no inputbox,not case sensitive
-		//console.log(types);
-		otable.fnFilter(types, 3, true, false, false, false);
+		console.log(types);
+		otable.fnFilter(types, 5, true, false, false, false);
 	}
 
 	function resetModal(){
