@@ -96,19 +96,19 @@ $page_nav = array(
 		"sub" => array(
 			"Supplier List" => array(
 				"title" => "[5.1] Supplier List",
-				"url" => APP_URL."/#"
+				"url" => APP_URL."/supplier.php"
 			),
 			"Product" => array(
-				"title" => "[5.2] Product",
-				"url" => APP_URL."/#"
+				"title" => "[5.2] Product List",
+				"url" => APP_URL."/product.php"
 			),
 			"Day Off" => array(
 				"title" => "Day Off",
-				"url" => APP_URL."/#"
+				"url" => APP_URL."/mas-supplier-dayoff.php"
 			),
 			"Full Product" => array(
 				"title" => "Full Product",
-				"url" => APP_URL."/#"
+				"url" => APP_URL."/mas-supplier-fullproduct.php"
 			),
 		),
 	),

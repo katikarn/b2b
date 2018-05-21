@@ -1,0 +1,577 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 14, 2018 at 04:46 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 7.1.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `b2b`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_agent_country_ms`
+--
+
+CREATE TABLE `tb_agent_country_ms` (
+  `agentcountry_id` int(11) NOT NULL,
+  `agentcountry_code` char(3) DEFAULT NULL,
+  `agentcountry_name` varchar(45) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_agent_country_ms`
+--
+
+INSERT INTO `tb_agent_country_ms` (`agentcountry_id`, `agentcountry_code`, `agentcountry_name`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 'IN', 'India', '2018-05-31 00:00:00', 'admin', '2018-05-09 23:44:10', 'admin'),
+(2, 'TH', 'Thailand', '2018-05-09 23:41:51', 'admin', '2018-05-09 23:43:11', 'admin'),
+(3, 'SG', 'Singapore', '2018-05-09 23:44:33', 'admin', '2018-05-09 23:44:33', 'admin'),
+(4, 'VN', 'Vietnam', '2018-05-09 23:44:54', 'admin', '2018-05-09 23:44:54', 'admin'),
+(5, 'MY', 'Malaysia', '2018-05-09 23:45:23', 'admin', '2018-05-09 23:45:23', 'admin'),
+(6, 'MM', 'Myanmar', '2018-05-09 23:46:45', 'admin', '2018-05-09 23:46:45', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_agent_tr`
+--
+
+CREATE TABLE `tb_agent_tr` (
+  `agent_id` int(11) NOT NULL,
+  `agent_status` char(1) NOT NULL,
+  `agent_name` varchar(100) NOT NULL,
+  `agentcountry_id` int(11) NOT NULL,
+  `agent_contact_name` varchar(50) NOT NULL,
+  `agent_contact_tel` varchar(15) NOT NULL,
+  `agent_contact_email` varchar(50) NOT NULL,
+  `agent_contact_line` varchar(50) NOT NULL,
+  `agent_license` varchar(20) NOT NULL,
+  `agent_license_file` varchar(100) NOT NULL,
+  `agent_section` int(11) NOT NULL,
+  `agent_logo_file` varchar(100) NOT NULL,
+  `agent_username` varchar(25) NOT NULL,
+  `agent_password` varchar(50) NOT NULL,
+  `agent_price_type` char(1) NOT NULL,
+  `agent_remark` varchar(500) NOT NULL,
+  `create_datetime` datetime NOT NULL,
+  `create_by` varchar(45) NOT NULL,
+  `update_datetime` datetime NOT NULL,
+  `update_by` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_agent_tr`
+--
+
+INSERT INTO `tb_agent_tr` (`agent_id`, `agent_status`, `agent_name`, `agentcountry_id`, `agent_contact_name`, `agent_contact_tel`, `agent_contact_email`, `agent_contact_line`, `agent_license`, `agent_license_file`, `agent_section`, `agent_logo_file`, `agent_username`, `agent_password`, `agent_price_type`, `agent_remark`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 'A', 'Test', 2, 'Agent Name', '09999999', 'test@tt.com', 'ttt', 'LICENSE', '', 1, '', '', '', 'A', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', ''),
+(2, 'W', 'Test2', 2, 'Agent Name', '09999999', 'test@tt.com', 'ttt', 'LICENSE', '', 1, '', '', '', 'A', '', '0000-00-00 00:00:00', 'admin', '0000-00-00 00:00:00', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_auditlog_tr`
+--
+
+CREATE TABLE `tb_auditlog_tr` (
+  `audit_id` int(11) NOT NULL,
+  `audit_type` varchar(45) NOT NULL,
+  `audit_detail` varchar(250) NOT NULL,
+  `audit_ip` varchar(20) NOT NULL,
+  `create_datetime` datetime NOT NULL,
+  `create_by` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_auditlog_tr`
+--
+
+INSERT INTO `tb_auditlog_tr` (`audit_id`, `audit_type`, `audit_detail`, `audit_ip`, `create_datetime`, `create_by`) VALUES
+(1, 'Login', 'Username : admin Type : ', '::1', '2018-05-07 22:09:58', 'admin'),
+(2, 'Login', 'Username : admin Type : ', '::1', '2018-05-07 22:12:04', 'admin'),
+(3, 'Login', 'Username : admin Type : ', '::1', '2018-05-07 22:12:10', 'admin'),
+(4, 'Login', 'Username : admin Type : ', '::1', '2018-05-07 22:12:28', 'admin'),
+(5, 'Login', 'Username : admin Type : ', '::1', '2018-05-07 22:13:11', 'admin'),
+(6, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:12:30', 'admin'),
+(7, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:12:36', 'admin'),
+(8, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:13:09', 'admin'),
+(9, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:14:15', 'admin'),
+(10, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:15:01', 'admin'),
+(11, 'Login', 'Username : admin Type : ', '::1', '2018-05-08 11:16:41', 'admin'),
+(12, 'Login', 'Username : admin Type : 4', '::1', '2018-05-09 11:57:12', 'admin'),
+(13, 'Login', 'Username : admin Type : 4', '::1', '2018-05-09 17:03:39', 'admin'),
+(14, 'Login', 'Username : admin Type : 4', '::1', '2018-05-09 17:18:39', 'admin'),
+(15, 'Login', 'Username : admin Type : 4', '::1', '2018-05-12 01:33:19', 'admin'),
+(16, 'Login', 'Username : admin Type : 4', '::1', '2018-05-14 13:53:21', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_conf_ms`
+--
+
+CREATE TABLE `tb_conf_ms` (
+  `conf_id` int(11) NOT NULL,
+  `conf_name` varchar(45) DEFAULT NULL,
+  `conf_value` varchar(100) DEFAULT NULL,
+  `conf_remark` varchar(250) NOT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_conf_ms`
+--
+
+INSERT INTO `tb_conf_ms` (`conf_id`, `conf_name`, `conf_value`, `conf_remark`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 'SENDING_EMAIL', 'katikarn@hotmail.com', '', '2018-05-09 17:37:41', 'admin', '2018-05-09 17:37:41', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_currency_ms`
+--
+
+CREATE TABLE `tb_currency_ms` (
+  `currency_id` int(11) NOT NULL,
+  `currency_code` char(3) DEFAULT NULL,
+  `currency_name` varchar(45) NOT NULL,
+  `currency_flag` varchar(45) DEFAULT NULL,
+  `currency_rate` decimal(6,4) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_currency_ms`
+--
+
+INSERT INTO `tb_currency_ms` (`currency_id`, `currency_code`, `currency_name`, `currency_flag`, `currency_rate`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(2, 'USD', 'US DOLLAR', '', '32.2500', '2018-05-08 16:41:29', 'admin', '2018-05-09 17:20:37', 'admin'),
+(3, 'EUR', 'EURO', '', '38.4262', '2018-05-09 17:21:03', 'admin', '2018-05-09 17:21:03', 'admin'),
+(4, 'GBP', 'BRITISH POUND STERLING', '', '44.3425', '2018-05-09 17:21:46', 'admin', '2018-05-09 17:21:46', 'admin'),
+(5, 'JPY', 'JAPANESE YEN', '', '29.8900', '2018-05-09 17:22:21', 'admin', '2018-05-09 17:22:21', 'admin'),
+(6, 'SGD', 'SINGAPORE DOLLAR', '', '24.3400', '2018-05-09 17:22:37', 'admin', '2018-05-09 17:22:37', 'admin'),
+(7, 'HKD', 'HONG KONG DOLLAR', '', '4.2175', '2018-05-09 17:23:00', 'admin', '2018-05-09 17:23:00', 'admin'),
+(8, 'KRW', 'KOREAN WON', '', '0.0340', '2018-05-09 17:23:30', 'admin', '2018-05-09 17:23:30', 'admin'),
+(9, 'CHF', 'SWISS FRANC', '', '32.5350', '2018-05-09 17:30:45', 'admin', '2018-05-09 17:30:45', 'admin'),
+(10, 'AUD', 'AUSTRALIAN DOLLAR', '', '24.6938', '2018-05-09 17:31:13', 'admin', '2018-05-09 17:31:13', 'admin'),
+(11, 'MYR', 'MALAYSIAN RINGGIT', '', '8.5000', '2018-05-09 17:31:32', 'admin', '2018-05-09 17:31:32', 'admin'),
+(12, 'ZAR', 'SOUTH AFRICAN RAND', '', '2.9500', '2018-05-09 17:32:09', 'admin', '2018-05-09 17:32:09', 'admin'),
+(13, 'SEK', 'SWEDISH KRONA', '', '3.7213', '2018-05-09 17:32:31', 'admin', '2018-05-09 17:32:31', 'admin'),
+(14, 'CAD', 'CANADIAN DOLLAR', '', '25.2138', '2018-05-09 17:33:03', 'admin', '2018-05-09 17:33:03', 'admin'),
+(15, 'NZD', 'NEWZEALAND DOLLAR', '', '23.2988', '2018-05-09 17:33:30', 'admin', '2018-05-09 17:33:30', 'admin'),
+(16, 'INR', 'INDIAN RUPEE', '', '0.5140', '2018-05-09 17:33:58', 'admin', '2018-05-09 17:33:58', 'admin'),
+(17, 'CNY', 'CHINESE YUAN', '', '5.2093', '2018-05-09 17:34:22', 'admin', '2018-05-09 17:34:22', 'admin'),
+(18, 'PHP', 'PHILIPPINE PESO', '', '0.7900', '2018-05-09 17:34:48', 'admin', '2018-05-09 17:34:48', 'admin'),
+(19, 'TWD', 'TAIWAN DOLLAR', '', '1.1500', '2018-05-09 17:35:08', 'admin', '2018-05-09 17:35:08', 'admin'),
+(20, 'BHD', 'BAHRAINI DINAR', '', '88.8800', '2018-05-09 17:35:30', 'admin', '2018-05-09 17:35:30', 'admin'),
+(21, 'IDR', 'INDONESIAN RUPIAH', '', '0.0030', '2018-05-09 17:35:53', 'admin', '2018-05-09 17:35:53', 'admin'),
+(22, 'BND', 'BRUNEI DOLLAR', '', '24.2000', '2018-05-09 17:36:13', 'admin', '2018-05-09 17:36:13', 'admin'),
+(23, 'RUB', 'RUSSIAN RUBLE', '', '0.7000', '2018-05-09 17:36:34', 'admin', '2018-05-09 17:36:34', 'admin'),
+(24, 'VND', 'VIETNAMESE DONG', '', '0.0018', '2018-05-09 17:36:52', 'admin', '2018-05-09 17:36:52', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_dest_country_ms`
+--
+
+CREATE TABLE `tb_dest_country_ms` (
+  `destcoun_id` int(11) NOT NULL,
+  `destcoun_code` char(3) DEFAULT NULL,
+  `destcoun_name` varchar(45) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_dest_country_ms`
+--
+
+INSERT INTO `tb_dest_country_ms` (`destcoun_id`, `destcoun_code`, `destcoun_name`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 'TH', 'Thailand', '2018-05-09 23:47:39', 'admin', '2018-05-09 23:47:39', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_dest_ms`
+--
+
+CREATE TABLE `tb_dest_ms` (
+  `dest_id` int(11) NOT NULL,
+  `dest_name` varchar(45) DEFAULT NULL,
+  `destcoun_id` int(11) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_masofmas_ms`
+--
+
+CREATE TABLE `tb_masofmas_ms` (
+  `masofmas_id` int(11) NOT NULL,
+  `masofmas_name` varchar(45) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_masofmas_ms`
+--
+
+INSERT INTO `tb_masofmas_ms` (`masofmas_id`, `masofmas_name`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(5, 'USER_STATUS', '2018-05-08 18:12:56', 'admin', '2018-05-10 00:36:45', 'admin'),
+(6, 'USER_STAFF_TYPE', '2018-05-09 00:22:30', 'admin', '2018-05-09 00:22:30', 'admin'),
+(7, 'AGENT_STATUS', '2018-05-10 00:36:58', 'admin', '2018-05-10 00:36:58', 'admin'),
+(8, 'AGENT_PRICE', '2018-05-12 02:38:22', 'admin', '2018-05-12 02:55:38', 'admin'),
+(9, 'AGENT_TYPE', '2018-05-12 02:55:51', 'admin', '2018-05-12 02:55:51', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_mas_ms`
+--
+
+CREATE TABLE `tb_mas_ms` (
+  `mas_id` int(11) NOT NULL,
+  `masofmas_id` int(11) DEFAULT NULL,
+  `mas_code` char(2) DEFAULT NULL,
+  `mas_value` varchar(45) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` varchar(45) DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_mas_ms`
+--
+
+INSERT INTO `tb_mas_ms` (`mas_id`, `masofmas_id`, `mas_code`, `mas_value`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 5, 'A', 'Active', '2018-05-08 18:13:09', 'admin', '2018-05-08 18:13:09', 'admin'),
+(2, 5, 'I', 'Inactive', '2018-05-08 18:13:24', 'admin', '2018-05-08 18:13:24', 'admin'),
+(3, 5, 'C', 'Cancel', '2018-05-08 18:14:45', 'admin', '2018-05-08 18:14:45', 'admin'),
+(4, 6, 'A', 'Admin', '2018-05-09 00:23:30', 'admin', '2018-05-09 00:23:30', 'admin'),
+(5, 6, 'M', 'Manager', '2018-05-09 00:24:10', 'admin', '2018-05-09 00:24:10', 'admin'),
+(6, 6, 'S', 'Supervisor', '2018-05-09 00:24:45', 'admin', '2018-05-09 00:24:45', 'admin'),
+(7, 6, 'U', 'User', '2018-05-09 00:25:35', 'admin', '2018-05-09 00:25:35', 'admin'),
+(8, 7, 'W', 'Wait for Approve', '2018-05-10 00:38:15', 'admin', '2018-05-10 00:38:15', 'admin'),
+(9, 7, 'A', 'Active', '2018-05-10 00:38:37', 'admin', '2018-05-10 00:38:37', 'admin'),
+(10, 7, 'I', 'Inactive', '2018-05-10 00:38:59', 'admin', '2018-05-10 00:38:59', 'admin'),
+(11, 7, 'C', 'Cancel', '2018-05-10 00:39:44', 'admin', '2018-05-10 00:39:44', 'admin'),
+(12, 7, 'U', 'Unapprove', '2018-05-10 00:39:57', 'admin', '2018-05-10 00:39:57', 'admin'),
+(13, 8, 'A', 'Level A', '2018-05-12 02:40:50', 'admin', '2018-05-12 02:40:50', 'admin'),
+(14, 8, 'B', 'Level B', '2018-05-12 02:41:08', 'admin', '2018-05-12 02:41:08', 'admin'),
+(15, 9, '1', 'DMC', '2018-05-12 02:56:27', 'admin', '2018-05-12 02:56:27', 'admin'),
+(16, 9, '2', 'Tour Counter', '2018-05-12 02:56:57', 'admin', '2018-05-12 02:56:57', 'admin'),
+(17, 9, '3', 'Travel Agent', '2018-05-12 02:57:14', 'admin', '2018-05-12 02:57:14', 'admin'),
+(18, 9, '4', 'Wholesale Travel Company', '2018-05-12 02:57:30', 'admin', '2018-05-12 02:57:30', 'admin'),
+(19, 9, '5', 'Corperate', '2018-05-12 02:57:47', 'admin', '2018-05-12 02:57:47', 'admin'),
+(20, 9, '6', 'Goverment', '2018-05-12 02:58:04', 'admin', '2018-05-12 02:58:04', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_product_full_tr`
+--
+
+CREATE TABLE `tb_product_full_tr` (
+  `full_id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `full_date` varchar(45) DEFAULT NULL,
+  `full_message` varchar(45) DEFAULT NULL,
+  `full_remark` varchar(500) DEFAULT NULL,
+  `crate_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_supplier_dayoff_tr`
+--
+
+CREATE TABLE `tb_supplier_dayoff_tr` (
+  `dayoff_id` int(11) NOT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `dayoff_date` varchar(45) DEFAULT NULL,
+  `dayoff_message` varchar(45) DEFAULT NULL,
+  `dayoff_remark` varchar(500) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_supplier_tr`
+--
+
+CREATE TABLE `tb_supplier_tr` (
+  `supplier_id` int(11) NOT NULL,
+  `supplier_status` char(1) NOT NULL,
+  `supplier_type` char(1) NOT NULL,
+  `supplier_destination` varchar(50) NOT NULL,
+  `supplier_name` varchar(100) NOT NULL,
+  `supplier_name_acc` varchar(100) NOT NULL,
+  `supplier_address` varchar(250) NOT NULL,
+  `supplier_tel` varchar(15) NOT NULL,
+  `supplier_website` varchar(50) NOT NULL,
+  `supplier_googlemap` varchar(250) NOT NULL,
+  `supplier_contract_file` varchar(100) NOT NULL,
+  `supplier_other_file` varchar(100) NOT NULL,
+  `supplier_paytype` char(1) NOT NULL,
+  `supplier_max_credit` decimal(9,2) NOT NULL,
+  `supplier_credit_term` int(11) NOT NULL,
+  `supplier_sales_name` varchar(50) NOT NULL,
+  `supplier_sales_tel` varchar(50) NOT NULL,
+  `supplier_sales_email` varchar(50) NOT NULL,
+  `supplier_sales_line` varchar(50) NOT NULL,
+  `supplier_reserv_name` varchar(50) NOT NULL,
+  `supplier_reserv_tel` varchar(50) NOT NULL,
+  `supplier_reserv_email` varchar(50) NOT NULL,
+  `supplier_reserv_line` varchar(50) NOT NULL,
+  `supplier_reserv_fax` varchar(50) NOT NULL,
+  `supplier_reserv_main` varchar(50) NOT NULL,
+  `supplier_account_name` varchar(50) NOT NULL,
+  `supplier_account_tel` varchar(50) NOT NULL,
+  `supplier_account_email` varchar(50) NOT NULL,
+  `supplier_remark` varchar(500) NOT NULL,
+  `createdatetime` datetime NOT NULL,
+  `createby` varchar(25) NOT NULL,
+  `updatedatetime` datetime NOT NULL,
+  `updateby` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_user_tr`
+--
+
+CREATE TABLE `tb_user_tr` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `user_email` varchar(45) NOT NULL,
+  `user_status` char(1) DEFAULT NULL,
+  `user_type` int(1) DEFAULT NULL,
+  `user_remark` varchar(500) DEFAULT NULL,
+  `create_datetime` datetime DEFAULT NULL,
+  `create_by` varchar(45) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `update_by` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_user_tr`
+--
+
+INSERT INTO `tb_user_tr` (`user_id`, `username`, `password`, `user_email`, `user_status`, `user_type`, `user_remark`, `create_datetime`, `create_by`, `update_datetime`, `update_by`) VALUES
+(1, 'admin', 'password', 'katikarn@hotmail.com', 'A', 4, '', NULL, NULL, '2018-05-09 01:32:25', 'admin'),
+(2, 'king', '123456', 'king@smarttravelglobal.com', 'A', 5, '', '2018-05-09 01:35:27', 'admin', '2018-05-09 01:35:27', 'admin'),
+(3, 'katt', '098765', 'katt@smarttravelglobal.com', 'A', 7, '', '2018-05-09 01:36:08', 'admin', '2018-05-09 01:36:08', 'admin'),
+(4, 'nick', '123456', 'nick@smarttravelglobal.com', 'A', 7, '', '2018-05-09 01:36:36', 'admin', '2018-05-09 01:36:36', 'admin');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tb_agent_country_ms`
+--
+ALTER TABLE `tb_agent_country_ms`
+  ADD PRIMARY KEY (`agentcountry_id`);
+
+--
+-- Indexes for table `tb_agent_tr`
+--
+ALTER TABLE `tb_agent_tr`
+  ADD PRIMARY KEY (`agent_id`);
+
+--
+-- Indexes for table `tb_auditlog_tr`
+--
+ALTER TABLE `tb_auditlog_tr`
+  ADD PRIMARY KEY (`audit_id`);
+
+--
+-- Indexes for table `tb_conf_ms`
+--
+ALTER TABLE `tb_conf_ms`
+  ADD PRIMARY KEY (`conf_id`);
+
+--
+-- Indexes for table `tb_currency_ms`
+--
+ALTER TABLE `tb_currency_ms`
+  ADD PRIMARY KEY (`currency_id`);
+
+--
+-- Indexes for table `tb_dest_country_ms`
+--
+ALTER TABLE `tb_dest_country_ms`
+  ADD PRIMARY KEY (`destcoun_id`);
+
+--
+-- Indexes for table `tb_dest_ms`
+--
+ALTER TABLE `tb_dest_ms`
+  ADD PRIMARY KEY (`dest_id`),
+  ADD KEY `destcoun_id` (`destcoun_id`);
+
+--
+-- Indexes for table `tb_masofmas_ms`
+--
+ALTER TABLE `tb_masofmas_ms`
+  ADD PRIMARY KEY (`masofmas_id`);
+
+--
+-- Indexes for table `tb_mas_ms`
+--
+ALTER TABLE `tb_mas_ms`
+  ADD PRIMARY KEY (`mas_id`),
+  ADD KEY `mas_to_masofmas` (`masofmas_id`);
+
+--
+-- Indexes for table `tb_product_full_tr`
+--
+ALTER TABLE `tb_product_full_tr`
+  ADD PRIMARY KEY (`full_id`);
+
+--
+-- Indexes for table `tb_supplier_dayoff_tr`
+--
+ALTER TABLE `tb_supplier_dayoff_tr`
+  ADD PRIMARY KEY (`dayoff_id`);
+
+--
+-- Indexes for table `tb_supplier_tr`
+--
+ALTER TABLE `tb_supplier_tr`
+  ADD PRIMARY KEY (`supplier_id`);
+
+--
+-- Indexes for table `tb_user_tr`
+--
+ALTER TABLE `tb_user_tr`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tb_agent_country_ms`
+--
+ALTER TABLE `tb_agent_country_ms`
+  MODIFY `agentcountry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `tb_agent_tr`
+--
+ALTER TABLE `tb_agent_tr`
+  MODIFY `agent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tb_auditlog_tr`
+--
+ALTER TABLE `tb_auditlog_tr`
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `tb_conf_ms`
+--
+ALTER TABLE `tb_conf_ms`
+  MODIFY `conf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tb_currency_ms`
+--
+ALTER TABLE `tb_currency_ms`
+  MODIFY `currency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `tb_dest_country_ms`
+--
+ALTER TABLE `tb_dest_country_ms`
+  MODIFY `destcoun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tb_dest_ms`
+--
+ALTER TABLE `tb_dest_ms`
+  MODIFY `dest_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_masofmas_ms`
+--
+ALTER TABLE `tb_masofmas_ms`
+  MODIFY `masofmas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `tb_mas_ms`
+--
+ALTER TABLE `tb_mas_ms`
+  MODIFY `mas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `tb_product_full_tr`
+--
+ALTER TABLE `tb_product_full_tr`
+  MODIFY `full_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_supplier_dayoff_tr`
+--
+ALTER TABLE `tb_supplier_dayoff_tr`
+  MODIFY `dayoff_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_supplier_tr`
+--
+ALTER TABLE `tb_supplier_tr`
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_user_tr`
+--
+ALTER TABLE `tb_user_tr`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tb_mas_ms`
+--
+ALTER TABLE `tb_mas_ms`
+  ADD CONSTRAINT `mas_to_masofmas` FOREIGN KEY (`masofmas_id`) REFERENCES `tb_masofmas_ms` (`masofmas_id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
