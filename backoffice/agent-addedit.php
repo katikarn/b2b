@@ -33,9 +33,9 @@
 	//Get data from database
 
 	if(isset($_GET['id']))	{
-		$sql = "SELECT agent_id, agent_status, agent_name, agentcountry_id, 
-		agent_contact_name, agent_contact_tel, agent_contact_email, agent_contact_line, 
-		agent_license, agent_license_file, agent_section, agent_logo_file, agent_username, 
+		$sql = "SELECT agent_id, agent_status, agent_name, agentcountry_id,
+		agent_contact_name, agent_contact_tel, agent_contact_email, agent_contact_line,
+		agent_license, agent_license_file, agent_section, agent_logo_file, agent_username,
 		agent_password, agent_price_type, agent_remark, create_datetime, create_by, update_datetime, update_by
 		FROM tb_agent_tr
 		WHERE agent_id = '".$_GET['id']."'";
@@ -241,10 +241,10 @@
 										<label class="label">Agent Type</label>
 										<label class="select required">
 											<select name="lsbagent_section" id="lsbagent_section" class="input-sm">
-												<option value="" selected></option>
+												<option value="0" selected>--Select--</option>
 												<?php
-												$sql = "SELECT mas_id, mas_value from tb_mas_ms, tb_masofmas_ms 
-														WHERE tb_mas_ms.masofmas_id = tb_masofmas_ms.masofmas_id 
+												$sql = "SELECT mas_id, mas_value from tb_mas_ms, tb_masofmas_ms
+														WHERE tb_mas_ms.masofmas_id = tb_masofmas_ms.masofmas_id
 														AND tb_masofmas_ms.masofmas_name='AGENT_TYPE'";
 												$result = mysqli_query($conn ,$sql);
 												if(mysqli_num_rows($result) > 0)	{
@@ -356,12 +356,13 @@
 									<section class="col col-2">
 										<button type="submit" class="btn btn-primary" name="submitAddBooking" id="submitAddBooking">Save</button>
 										<input type="hidden" name="id" id="id" value="<?=$_agent_id;?>"/>
+										<input type="hidden" name="type" id="type" value="<?php echo $_GET['type']; ?>"/> <!-- รับค่าจากไฟล์ agent.php ว่ากดปุ่ม Add  หรือ Edit มา -->
 									</section>
 								</footer>
 							</form>
 						</div>
 					</div>
-				</article>	
+				</article>
 			</div>
 		</section>
 	</div>
@@ -443,7 +444,7 @@
 		}
 	});
 
-})
+//})
 </script>
 <?php
 	//include footer

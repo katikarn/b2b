@@ -130,12 +130,16 @@
 						</div>
 					</div>
 
-					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-						<div>
+					<div class="jarviswidget jarviswidget-color-orange" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+								<span class="widget-icon"><i class="fa fa-table"></i> </span>
+								<h2>agent List</h2>
+							</header>
+							<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
 
-						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
+										<table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
 											<th data-class="expand">Name</th>
@@ -272,7 +276,7 @@
 		$('#dt_basic').dataTable({
 			"sDom":
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-2 col-xs-12 hidden-xs'i><'hidden-xs col-sm-6 col-md-4 'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.

@@ -30,7 +30,7 @@ include("inc/nav.php");
 ?>
 <!-- ==========================CONTENT STARTS HERE ========================== -->
 <!-- MAIN PANEL -->
-<div id="main" role="main">
+<div id="main" role="main" >
 	<?php
 		//configure ribbon (breadcrumbs) array("name"=>"url"), leave url empty if no url
 		//$breadcrumbs["New Crumb"] => "http://url.com"
@@ -60,12 +60,12 @@ include("inc/nav.php");
 ?>
 <!-- END PAGE FOOTER -->
 
-<?php 
+<?php
 	//include required scripts
-	include("inc/scripts.php"); 
+	include("inc/scripts.php");
 ?>
 
-<!-- PAGE RELATED PLUGIN(S) 
+<!-- PAGE RELATED PLUGIN(S)
 <script src="..."></script>-->
 
 <script>
@@ -73,7 +73,7 @@ include("inc/nav.php");
 
 </script>
 
-<?php 
+<?php
 	//include footer
-	include("inc/google-analytics.php"); 
+	include("inc/google-analytics.php");
 ?>

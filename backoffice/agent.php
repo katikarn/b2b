@@ -1,4 +1,4 @@
-<?php 
+<?php
 	session_start();
 	include("inc/auth.php");
 	include("inc/constant.php");
@@ -6,25 +6,25 @@
 	/////////////////////////////////////////////////////////
 	//initilize the page
 	require_once ("inc/init.php");
-	
+
 	//require UI configuration (nav, ribbon, etc.)
 	require_once ("inc/config.ui.php");
-	
+
 	/*---------------- PHP Custom Scripts ---------
-		
+
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
-	
+
 	$page_title = "Agent Management";
-	
+
 	/* ---------------- END PHP Custom Scripts ------------- */
-	
+
 	//include header
 	//you can add your custom css in $page_css array.
 	//Note: all css files are inside css/ folder
 	$page_css[] = "your_style.css";
 	include ("inc/header.php");
-	
+
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
 	$page_nav["Agent"]["sub"]["Agent List"]["active"] = true;
@@ -35,31 +35,31 @@
 	.header{
 		font-weight:bold !important;
 	}
-	
+
 	.row{
 		margin-bottom:10px;
 	}
-	
+
 	#dt_basic{
 		margin-top: 0px !important;
 	}
-	
+
 	.status span{
 		color:#fff;
 		border-radius: 4px;
 		border: 1px solid #ccc;
 		padding: 2px;
 	}
-	
+
 	.modal-header{
 		background-color: royalblue;
 		color: #fff;
 	}
-	
+
 	.center{
 		text-align:	center;
 	}
-	
+
 	input[type=text], select, input[type=email], textarea{
 		width: 100%;
 		padding: 5px;
@@ -67,7 +67,7 @@
 		border: 1px solid #ccc;
 		border-radius: 4px;
 	}
-	
+
 	textarea{
 		resize:none;
 		border-radius: 0px !important;
@@ -81,28 +81,27 @@
 	.required{
 		border-left: 7px solid #FF3333;
 	}
-	
+
 	@media only screen and (max-width: 320px) {
 	    label.radio {
 	        margin-right: 15px !important;
 	    }
 	}
-	
+
 </style>
 <!-- ==========================CONTENT STARTS HERE ========================== -->
 <!-- MAIN PANEL -->
-<div id="main" role="main">
-	
-	<?php
+<div id="main" role="main" >
+<?php
 		//configure ribbon (breadcrumbs) array("name"=>"url"), leave url empty if no url
 		//$breadcrumbs["New Crumb"] => "http://url.com"
 		$breadcrumbs["Setup"] = "";
 		include("inc/ribbon.php");
 	?>
-	
+
 	<!-- MAIN CONTENT -->
 	<div id="content">
-		
+
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
@@ -110,19 +109,19 @@
 				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-				
+
 			</div>
 		</div>
-		
+
 		<!-- widget grid -->
 		<section id="widget-grid" class="">
-			
+
 			<!-- row -->
 			<div class="row">
-				
+
 				<!-- NEW WIDGET START -->
 				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					
+
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
 							Keywoard<br/>
@@ -153,14 +152,17 @@
 							</div>
 						</div>
 					</div>
-					
-					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-						<div>
+					<div class="jarviswidget jarviswidget-color-orange" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+								<span class="widget-icon"><i class="fa fa-table"></i> </span>
+								<h2>agent List</h2>
+							</header>
+							<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
-								
-						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
-									<thead>			                
+
+										<table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
+									<thead>
 									<tr class="header">
 											<th data-hide="phone">ID</th>
 											<th data-class="expand">Name</th>
@@ -168,7 +170,7 @@
 											<th data-hide="phone">Email</th>
 											<th data-hide="phone">Tel</th>
 											<th data-hide="phone">Status</th>
-											<th class="center"><a href="agent-addedit.php" class="btn btn-small btn-success">Add new</a></th>
+											<th class="center"><a href="agent-addedit.php?type=<?php echo 'add';?>" class="btn btn-small btn-success">Add new</a></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -199,9 +201,9 @@
 														<td><?=$row['agentcountry_name']?></td>
 														<td><?=$row['agent_contact_email']?></td>
 														<td><?=$row['agent_contact_tel']?></td>
-														<td><?=$statusUser?></td>
+														<td><?=$row['agent_status']?></td>
 														<td class="center">
-															<a href="agent-addedit.php?id=<?=$row['agent_id']?>" class="btn btn-small btn-success">Edit</a>
+															<a href="agent-addedit.php?id=<?=$row['agent_id'] ?> &&type=<?='edit';?>" class="btn btn-small btn-success">Edit</a>
 															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
 														</td>
 													</tr>
@@ -210,13 +212,13 @@
 											}
 										?>
 									</tbody>
-								</table>								
-							</div>					
+								</table>
+							</div>
 						</div>
 					</div>
 				</article>
 			</div>
-		</section>		
+		</section>
 	</div>
 </div>
 
@@ -232,23 +234,23 @@
 <script src="<?php echo ASSETS_URL; ?>/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 
 <script type="text/javascript">
-	
+
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	var otable;
 	$(document).ready(function() {
-		
+
 		/* BASIC ;*/
 		var responsiveHelper_dt_basic = undefined;
-		
+
 		var breakpointDefinition = {
 			tablet : 1024,
 			phone : 480
 		};
-		
+
 		$('#dt_basic').dataTable({
-			"sDom": 
+			"sDom":
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-2 col-xs-12 hidden-xs'i><'hidden-xs col-sm-6 col-md-4 'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.
@@ -266,7 +268,7 @@
 		/* Custom Search box*/
 		var table_dtbasic = $('#dt_basic').DataTable();
 		otable = $('#dt_basic').dataTable();
-		
+
 		$( "#column3_search" ).keyup(function() {
 			//alert( "Handler for .keyup() called." );
 			table_dtbasic.search( this.value ).draw();
@@ -278,38 +280,38 @@
 			var dataString = 'user_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
-                
+
                 url: "fetchEdit.php",
 				type:"POST",
                 data: dataString,
 				dataType : 'json',
-                
+
                 success: function (data) {
 					if(data != null){
-						$('#user_id').val(data.user_id);						
+						$('#user_id').val(data.user_id);
 						$('#chkuser_status_' + data.user_status).prop('checked',true);
-						$('#lsbuser_type').val(data.user_type);  
-						$('#txbuser_email').val(data.user_email); 
+						$('#lsbuser_type').val(data.user_type);
+						$('#txbuser_email').val(data.user_email);
 						$('#txbusername').val(data.username);
 						$('#txbpassword').val(data.password);
-						$('#txbuser_remark').val(data.user_remark);  
-						$('#submitAdd').val("Update");  
+						$('#txbuser_remark').val(data.user_remark);
+						$('#submitAdd').val("Update");
 					}else{
-						$('#user_id').val('');			
+						$('#user_id').val('');
 						$('#chkuser_status_A').prop('checked',true);
-						$('#lsbuser_type').val('');  
-						$('#txbuser_email').val(''); 
+						$('#lsbuser_type').val('');
+						$('#txbuser_email').val('');
 						$('#txbusername').val('');
 						$('#txbpassword').val('');
-						$('#txbuser_remark').val('');  
+						$('#txbuser_remark').val('');
 						$('#submitAdd').val("Insert");
 					}
 				},
                 error: function(err) {
                     console.log('err : '+err);
-					
+
 				}
-			});  
+			});
 		});
 
 		//// --------------------------- Validate------------------------------
@@ -393,7 +395,7 @@
 	    }, '');
 	    $.validator.addMethod("notEqual", function(value, element, param) {
 	    	var check = true;
-	    	var isCheck = $('#submitAdd').val(); 
+	    	var isCheck = $('#submitAdd').val();
 	    	for (var i = 0; i < storeUsername.length; i++) {
 	    		//console.log(storeUsername[i]);
 	    		if(value == storeUsername[i] && isCheck == "Insert")
@@ -402,13 +404,13 @@
 	    		}
 	    	}
 		  return check;
-		}, "");		
+		}, "");
 
 	});
 
 	/* END BASIC */
 	function filterCheckbox(){
-		
+
 		var types = $('input:checkbox[name="status"]:checked').map(function() {
     		return '^' + this.value + '\$';
 		}).get().join('|');
@@ -423,4 +425,4 @@
 		$( "#user-form" ).find( ".required" ).css("border-left", "7px solid #FF3333");
 		$( "em" ).remove();
 	}
-</script>																												
+</script>
