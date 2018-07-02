@@ -34,11 +34,11 @@
 
 	if(isset($_GET['id']))	{
 		$sql = "SELECT agent_id, agent_status, agent_name, agentcountry_id,
-		agent_contact_name, agent_contact_tel, agent_contact_email, agent_contact_line,
-		agent_license, agent_license_file, agent_section, agent_logo_file, agent_username,
-		agent_password, agent_price_type, agent_remark, create_datetime, create_by, update_datetime, update_by
-		FROM tb_agent_tr
-		WHERE agent_id = '".$_GET['id']."'";
+				agent_contact_name, agent_contact_tel, agent_contact_email, agent_contact_line,
+				agent_license, agent_license_file, agent_section, agent_logo_file, agent_username,
+				agent_password, agent_price_type, agent_remark, create_datetime, create_by, update_datetime, update_by
+				FROM tb_agent_tr
+				WHERE agent_id = '".$_GET['id']."'";
 		$result = mysqli_query($conn ,$sql);
 		$row = mysqli_fetch_assoc($result);
 
@@ -202,122 +202,140 @@
 								} ?></h2>
 						</header>
 						<div>
-							<form action="agent-controller.php" method="post" id="detail-form" class="smart-form">
+							<form action="agent-controller.php" method="post" id="detail-form" class="smart-form" enctype="multipart/form-data">
 								<fieldset>
-									<section class="col col-6">
-										<label class="label">Agent Name</label>
-										<label class="input required">
-											<input type="text" name="txbagent_name" id="txbagent_name" maxlength="100" value="<?=$_agent_name;?>">
-										</label>
-									</section>
-									<section class="col col-6">
-										<label class="label">Email</label>
-										<label class="input required">
-											<input type="text" name="txbagent_contact_email" id="txbagent_contact_email" maxlength="100" value="<?=$_agent_contact_email;?>">
-										</label>
-									</section>
-									<section class="col col-6">
-									<label class="label">Country</label>
-										<label class="select required">
-											<select name="lsbagentcountry_id" id="lsbagentcountry_id" class="input-sm">
-												<option value="" selected></option>
-												<?php
-												$sql = "SELECT agentcountry_id, agentcountry_name FROM tb_agent_country_ms ORDER BY agentcountry_name";
-												$result = mysqli_query($conn ,$sql);
-												if(mysqli_num_rows($result) > 0)	{
-													//show data for each row
-													while($row = mysqli_fetch_assoc($result))	{
-														echo "<option value='".$row['agentcountry_id']."'";
-														if ($row['agentcountry_id']==$_agentcountry_id)	{
-															echo " selected ";
+									<div class="row">
+										<section class="col col-6">
+											<label class="label">Agent Name</label>
+											<label class="input required">
+												<input type="text" name="txbagent_name" id="txbagent_name" maxlength="100" value="<?=$_agent_name;?>">
+											</label>
+										</section>
+										<section class="col col-3">
+											<label class="label">Price Type</label>
+											<div class="inline-group">
+												<label class="radio">
+													<input type="radio" name="rdoagent_price_type" checked="checked">
+													<i></i>Level B</label>
+												<label class="radio">
+													<input type="radio" name="rdoagent_price_type" <?php if ($_agent_price_type=="A") { echo " checked='checked'";}?>>
+													<i></i>Level A</label>
+											</div>
+										</section>
+										<section class="col col-3">
+											<label class="label">File Logo</label>
+											<div class="input input-file">
+												<input type="file" id="txbagent_logo_file" name="txbagent_logo_file" onchange="this.parentNode.nextSibling.value = this.value; showFile(this.id);">											
+												<a href="<?=$path_folder_Agent.$_agent_logo_file?>" id="show_txbagent_logo_file" target="_blank" style="display: <?php 
+													if ($_agent_logo_file=="")	{
+														echo "none"; 
+													}else{ 
+														echo "block";
+													}?>"><?=$_agent_logo_file?></a>
+												<input type="hidden" id="Text_agent_logo_file" name="Text_agent_logo_file" value="<?=$_agent_logo_file?>"/> 
+											</div>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-3">
+										<label class="label">Country</label>
+											<label class="select required">
+												<select name="lsbagentcountry_id" id="lsbagentcountry_id" class="input-sm">
+													<option value="" selected></option>
+													<?php
+													$sql = "SELECT agentcountry_id, agentcountry_name FROM tb_agent_country_ms ORDER BY agentcountry_name";
+													$result = mysqli_query($conn ,$sql);
+													if(mysqli_num_rows($result) > 0)	{
+														//show data for each row
+														while($row = mysqli_fetch_assoc($result))	{
+															echo "<option value='".$row['agentcountry_id']."'";
+															if ($row['agentcountry_id']==$_agentcountry_id)	{
+																echo " selected ";
+															}
+															echo ">".$row['agentcountry_name']."</option>";
 														}
-														echo ">".$row['agentcountry_name']."</option>";
-													}
-												}?>
-											</select> <i></i>
-										</label>
-									</section>
-									<section class="col col-6">
-										<label class="label">Agent Type</label>
-										<label class="select required">
-											<select name="lsbagent_section" id="lsbagent_section" class="input-sm">
-												<option value="0" selected>--Select--</option>
-												<?php
-												$sql = "SELECT mas_id, mas_value from tb_mas_ms, tb_masofmas_ms
-														WHERE tb_mas_ms.masofmas_id = tb_masofmas_ms.masofmas_id
-														AND tb_masofmas_ms.masofmas_name='AGENT_TYPE'";
-												$result = mysqli_query($conn ,$sql);
-												if(mysqli_num_rows($result) > 0)	{
-													//show data for each row
-													while($row = mysqli_fetch_assoc($result))	{
-														echo "<option value='".$row['mas_id']."'";
-														if ($row['mas_id']==$_agent_section)	{
-															echo " selected ";
+													}?>
+												</select> <i></i>
+											</label>
+										</section>
+										<section class="col col-3">
+											<label class="label">Agent Type</label>
+											<label class="select required">
+												<select name="lsbagent_section" id="lsbagent_section" class="input-sm">
+													<option value="" selected>--Select--</option>
+													<?php
+													$sql = "SELECT mas_id, mas_value from tb_mas_ms, tb_masofmas_ms
+															WHERE tb_mas_ms.masofmas_id = tb_masofmas_ms.masofmas_id
+															AND tb_masofmas_ms.masofmas_name='AGENT_TYPE'";
+													$result = mysqli_query($conn ,$sql);
+													if(mysqli_num_rows($result) > 0)	{
+														//show data for each row
+														while($row = mysqli_fetch_assoc($result))	{
+															echo "<option value='".$row['mas_id']."'";
+															if ($row['mas_id']==$_agent_section)	{
+																echo " selected ";
+															}
+															echo ">".$row['mas_value']."</option>";
 														}
-														echo ">".$row['mas_value']."</option>";
-													}
-												}?>
-											</select> <i></i>
-										</label>
-									</section>
-									<section class="col col-6">
-										<label class="label">File Logo</label>
-										<div class="input input-file">
-												<span class="button"><input type="file" id="agent_logo_file" name="agent_logo_file" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" placeholder="Include some files" readonly="">
-										</div>
-									</section>
-									<section class="col col-6">
-										<label class="label">Price Type</label>
-										<div class="inline-group">
-											<label class="radio">
-												<input type="radio" name="rdoagent_price_type" checked="checked">
-												<i></i>Level B</label>
-											<label class="radio">
-												<input type="radio" name="rdoagent_price_type" <?php if ($_agent_price_type=="A") { echo " checked='checked'";}?>>
-												<i></i>Level A</label>
-										</div>
-									</section>
+													}?>
+												</select> <i></i>
+											</label>
+										</section>
+										<section class="col col-6">
+											<label class="label"><i>Note (Not show)</i></label>
+											<label class="input">
+												<textarea rows="3" name="txbagent_remark" id="txbagent_remark"><?=$_agent_remark?></textarea>
+											</label>
+										</section>
+									</div>
 								</fieldset>
 								<fieldset>
 									<section>
 									<header>
-										<b>Business Contact</b>
+										<b>Contact</b>
 									</header>
 									</section>
-									<section class="col col-6">
+									<section class="col col-3">
 										<label class="label">Contact Person</label>
 										<label class="input">
 											<input type="text" name="txbagent_contact_name" id="txbagent_contact_name" maxlength="100" value="<?=$_agent_contact_name;?>">
 										</label>
 									</section>
-									<section class="col col-6">
+									<section class="col col-3">
+										<label class="label">Email</label>
+										<label class="input required">
+											<input type="text" name="txbagent_contact_email" id="txbagent_contact_email" maxlength="100" value="<?=$_agent_contact_email;?>">
+										</label>
+									</section>
+									<section class="col col-3">
 										<label class="label">Tel</label>
 										<label class="input">
 											<input type="text" name="txbagent_contact_tel" id="txbagent_contact_tel" maxlength="100" value="<?=$_agent_contact_tel;?>">
 										</label>
 									</section>
-									<section class="col col-6">
-										<label class="label">Line or WhatApp</label>
-										<label class="input">
-											<input type="text" name="txbagent_contact_line" id="txbagent_contact_line" maxlength="100" value="<?=$_agent_contact_line;?>">
-										</label>
-									</section>
-									<section class="col col-6">
+									<section class="col col-3">
 										<label class="label">License No</label>
 										<label class="input">
 											<input type="text" name="txbagent_license" id="txbagent_license" maxlength="100" value="<?=$_agent_license;?>">
 										</label>
 									</section>
-									<section class="col col-6">
+									<section class="col col-3">
 										<label class="label">Attachment License File</label>
 										<div class="input input-file">
-											<span class="button"><input type="file" id="file" name="$_agent_license_file" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" placeholder="Include some files" readonly="">
+											<input type="file" id="txbagent_license_file" name="txbagent_license_file" onchange="this.parentNode.nextSibling.value = this.value; showFile(this.id);">											
+											<a href="<?=$path_folder_Agent.$_agent_license_file?>" id="show_txbagent_license_file" target="_blank" style="display: <?php 
+												if ($_agent_license_file=="")	{
+													echo "none"; 
+												}else{ 
+													echo "block";
+												}?>"><?=$_agent_license_file?></a>
+											<input type="hidden" id="Text_agent_license_file" name="Text_agent_license_file" value="<?=$_agent_license_file?>"/> 
 										</div>
-									</section >
-									<section class="col col-6">
-										<label class="label">Note</label>
+									</section>
+									<section class="col col-3">
+										<label class="label">Line or WhatApp</label>
 										<label class="input">
-											<textarea rows="3" name="txbagent_remark" id="txbagent_remark"><?=$_agent_remark?></textarea>
+											<input type="text" name="txbagent_contact_line" id="txbagent_contact_line" maxlength="100" value="<?=$_agent_contact_line;?>">
 										</label>
 									</section>
 								</fieldset>
@@ -327,13 +345,13 @@
 										<b>Login Info</b>
 									</header>
 									</section>
-									<section class="col col-6">
+									<section class="col col-3">
 										<label class="label">Username</label>
 										<label class="input">
 											<input type="text" name="txbagent_username" id="txbagent_username" maxlength="100" value="<?=$_agent_username;?>">
 										</label>
 									</section>
-									<section class="col col-6">
+									<section class="col col-3">
 										<label class="label">Password</label>
 										<label class="input">
 											<input type="text" name="txbagent_password" id="txbagent_password" maxlength="100" value="<?=$_agent_password;?>">
@@ -342,21 +360,21 @@
 								</fieldset>
 								<footer>
 									<section class="col col-10"  style="padding-left: 0px;">
-										<input type="radio" name="chkagent_status" id="chkagent_status_D" value="D" checked>
+										<input type="radio" name="chkagent_status" id="chkagent_status_W" value="W" checked>
 										<i></i><span style="background-color: teal; color: #ffffff">Wait for Approve</span>
-										<input type="radio" name="chkagent_status" id="chkagent_status_N" value="N" <?php if ($_agent_status=="N")    { echo " checked "; }?>>
+										<input type="radio" name="chkagent_status" id="chkagent_status_A" value="A" <?php if ($_agent_status=="A")    { echo " checked "; }?>>
 										<i></i><span style="background-color: Green; color: #ffffff">Active</span>
-										<input type="radio" name="chkagent_status" id="chkagent_status_C" value="C" <?php if ($_agent_status=="C")    { echo " checked "; }?>>
+										<input type="radio" name="chkagent_status" id="chkagent_status_I" value="I" <?php if ($_agent_status=="I")    { echo " checked "; }?>>
 										<i></i><span style="background-color: red; color: #ffffff">Inactive</span>
-										<input type="radio" name="chkagent_status" id="chkagent_status_P" value="P" <?php if ($_agent_status=="P")    { echo " checked "; }?>>
+										<input type="radio" name="chkagent_status" id="chkagent_status_C" value="C" <?php if ($_agent_status=="C")    { echo " checked "; }?>>
 										<i></i><span style="background-color: Orange; color: #ffffff">Cancel</span>
-										<input type="radio" name="chkagent_status" id="chkagent_status_P" value="P" <?php if ($_agent_status=="P")    { echo " checked "; }?>>
+										<input type="radio" name="chkagent_status" id="chkagent_status_U" value="U" <?php if ($_agent_status=="U")    { echo " checked "; }?>>
 										<i></i><span style="background-color: purple; color: #ffffff">Unapprove</span>
 									</section>
 									<section class="col col-2">
 										<button type="submit" class="btn btn-primary" name="submitAddBooking" id="submitAddBooking">Save</button>
 										<input type="hidden" name="id" id="id" value="<?=$_agent_id;?>"/>
-										<input type="hidden" name="type" id="type" value="<?php echo $_GET['type']; ?>"/> <!-- รับค่าจากไฟล์ agent.php ว่ากดปุ่ม Add  หรือ Edit มา -->
+										<input type="hidden" name="type" id="type" value="<?php echo $_GET['type']; ?>"/>
 									</section>
 								</footer>
 							</form>
@@ -423,7 +441,12 @@
 			},
 			lsbagent_section : {
 				required : true,
+			},
+			txbagent_contact_email : {
+				required : true,
+				email : true
 			}
+			
 		},
 		// Messages for form validation
 		messages : {
@@ -435,6 +458,10 @@
 			},
 			lsbagent_section : {
 				required : 'Please select Agent Type',
+			},
+			txbagent_contact_email : {
+				required : 'Please fill Email Address',
+				email : 'Email format incorrect'
 			}
 		},
 
@@ -444,6 +471,15 @@
 		}
 	});
 
+	function showFile(inputID){
+		console.log('inputID' + inputID);
+		console.log($("#"+ inputID)[0].files[0].name);
+		var fileName = $("#" + inputID)[0].files[0].name;
+		var pathFile = $("#" + inputID).val();
+		//$("#show_" + inputID ).css("display","block");
+		//$("#show_" + inputID).html(fileName);
+		//$("#show_" + inputID).attr("href", pathFile);
+	}
 //})
 </script>
 <?php

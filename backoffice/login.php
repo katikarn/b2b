@@ -98,9 +98,9 @@ include("inc/header.php");
 ?>
 <!-- END PAGE FOOTER -->
 
-<?php
+<?php 
 	//include required scripts
-	include("inc/scripts.php");
+	include("inc/scripts.php"); 
 ?>
 
 <script type="text/javascript">

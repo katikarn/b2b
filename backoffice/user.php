@@ -147,6 +147,10 @@
 					</div>
 					
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2>User Management</h2>
+						</header>
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
@@ -158,7 +162,8 @@
 											<th data-class="expand">Email</th>
 											<th data-hide="phone">Type</th>
 											<th data-hide="phone">Status</th>
-											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button></th>
+											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()"><i class="fa fa-plus"></i> <span class="hidden-mobile">Add New</span>
+</button></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -191,7 +196,7 @@
 														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['user_id']?>" >Edit</a>
+															data-whatever="<?=$row['user_id']?>" ><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
 														</td>
 													</tr>
 												<?PHP
@@ -346,7 +351,7 @@
 		$('#dt_basic').dataTable({
 			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.

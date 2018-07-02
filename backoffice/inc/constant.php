@@ -5,10 +5,12 @@
 	$sender = 'katikarn@gmail.com';
 
 	// Path File Upload
-	$path_folder_Agent = 'upload/agent/';
-	$path_folder_Supplier = 'upload/supplier/';
-	$path_folder_Product = 'upload/product/';
-	$path_folder_PDF = 'PDF/';
+	$path_folder_Destination = '../upload/destination/';
+	$path_folder_Agent = '../upload/agent/';
+	$path_folder_Supplier = '../upload/supplier/';
+	$path_folder_Supplier_Image = '../upload/supplier_image/';
+	$path_folder_Product = '../upload/product/';
+	$path_folder_contract = '../upload/contract/';
 
 	//configuration variables
 	$page_title = "Phuket Time Tour";

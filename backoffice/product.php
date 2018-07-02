@@ -3,6 +3,26 @@
 	include('inc/auth.php');
 	include("inc/constant.php");
 	include("inc/connectionToMysql.php");
+
+	if (isset($_GET['supplier_id']))	{
+		
+		$supplier_id = $_GET['supplier_id'];
+		$sql = "SELECT supplier_status, supplier_type, supplier_name, dest_name, mas_code, mas_value 
+				FROM tb_supplier_tr, tb_dest_ms, tb_mas_ms, tb_masofmas_ms
+				WHERE tb_supplier_tr.dest_id = tb_dest_ms.dest_id
+				AND tb_masofmas_ms.masofmas_id =  tb_mas_ms.masofmas_id
+				AND tb_masofmas_ms.masofmas_name = 'SUPPLIER_TYPE'
+				AND tb_supplier_tr.supplier_id = '".$supplier_id."'";
+
+		$result = mysqli_query($conn ,$sql);
+		mysqli_num_rows($result);
+		$row = mysqli_fetch_assoc($result);
+		$_supplier_status = $row['supplier_status'];
+		$_supplier_type = $row['supplier_type'];
+		$_supplier_name = $row['supplier_name'];
+		$_dest_name = $row['dest_name'];
+		$_mas_value = $row['mas_value'];
+	}
 /////////////////////////////////////////////////////////
 	//initilize the page
 	require_once ("inc/init.php");
@@ -15,7 +35,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 	
-	$page_title = "Product List";
+	$page_title = "Product of $_supplier_name";
 	
 	/* ---------------- END PHP Custom Scripts ------------- */
 	//include header
@@ -26,7 +46,7 @@
 	
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Supplier"]["sub"]["Product"]["active"] = true;
+	$page_nav["Supplier"]["sub"]["Supplier List"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 <style>
@@ -99,10 +119,10 @@
 	<!-- MAIN CONTENT -->
 	<div id="content">
 		<div class="row">
-			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-				<h1 class="header">
-					Product
-				</h1>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h3 class="header">
+				<?=$_supplier_name?> (<?=$_dest_name?> : <?=$_mas_value?>)<br>
+				</h3>
 			</div>
 		</div>
 		<!-- widget grid -->
@@ -116,58 +136,43 @@
 							Keyword<br/>
 							<input id="column3_search" type="text" name="googlesearch">
 						</div>
-						<div class="hidden-md col-lg-2">
-							<!-- Date<br/>
-							<input id="date_search" placeholder="DD/MM/YYYY" type="text" name="date_search"> -->
-						</div>
-						<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 status smart-form" style="padding-top: 25px;">
-							<div class="checkbox"  style="padding-left: 0px;">
-								<div class="col-xs-3 col-md-3">
-									<label class="checkbox">
-										<input type="checkbox" name="status" id="StatusA" value="Active" onclick="filterCheckbox();" checked ><i></i><span style="background-color: green">Active</span>
-									</label>
-								</div>
-								<div class="col-xs-3 col-md-3">
-									<label class="checkbox">
-										<input type="checkbox" name="status" id="StatusI" value="Inactive" onclick="filterCheckbox();" checked ><i></i><span style="background-color: red">Inactive</span>
-									</label>
-								</div>
-								<div class="col-xs-3 col-md-3">
-									<label class="checkbox">
-										<input type="checkbox" name="status" id="StatusC" value="Cancel" onclick="filterCheckbox();" checked ><i></i><span style="background-color: orange">Cancel</span>
-									</label>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2><?=$_supplier_name?></h2>
+						</header>
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
-									<thead>			                
+									<thead>
 										<tr class="header">
 											<th data-hide="phone">ID</th>
 											<th data-class="expand">Product Name</th>
-											<th data-hide="phone">Supplier Name</th>
-											<th data-hide="phone">Supplier Type</th>
 											<th data-hide="phone">Status</th>
-											<th class="center"><a href="product-addedit.php" class="btn btn-small btn-success">Add new</a></th>
+											<th class="center"><a href="<?php 
+															if ($_supplier_type=="A")	{
+																echo "product-a-addedit.php?supplier_id=".$supplier_id;
+															}else if ($_supplier_type=="D")	{
+																echo "product-d-addedit.php?supplier_id=".$supplier_id;
+															}else if ($_supplier_type=="T")	{
+																echo "product-t-addedit.php?supplier_id=".$supplier_id;
+															}?>" class="btn btn-small btn-success"><i class="fa fa-plus"></i> <span class="hidden-mobile">Add New</span></a></th>
 										</tr>
 									</thead>
 									<tbody>
 										<?PHP
-											$sql = "SELECT product_id, product_status, product_name, product_seat, product_desc,
-											product_for, TIME_FORMAT(product_showtime, '%H:%i') as product_showtime,
-											TIME_FORMAT(product_endtime, '%H:%i') as product_endtime, supplier_name , 
-											supplier_type, product_car_type
+											$sql = "SELECT product_id, product_status, product_name, product_desc,
+											supplier_name, supplier_type
 											FROM tb_product_tr ,tb_supplier_tr
-											where tb_supplier_tr.supplier_id = tb_product_tr.supplier_id";
-												$result = mysqli_query($conn ,$sql);
-												if(mysqli_num_rows($result) > 0){
+											where tb_supplier_tr.supplier_id = tb_product_tr.supplier_id
+											AND tb_supplier_tr.supplier_id = '".$supplier_id."'";
+											
+											$result = mysqli_query($conn ,$sql);
+											if(mysqli_num_rows($result) > 0){
 													//show data for each row
 												while($row = mysqli_fetch_assoc($result)){
-													
 													if($row['product_status'] == 'A'){
 														$statusUser = '<font color="green">Active</font>';
 													}else if($row['product_status'] == 'I'){
@@ -177,52 +182,21 @@
 													}else{
 														$statusUser = '';
 													}
-													// Production Option wording
-													$ProductOption = "";
-													if($row['supplier_type'] == 'A'){
-													//S : Show
-														$SupplierType = 'Attraction & Show';
-														$ProductOption = "(Show Time:".$row['product_showtime'];
-														if($row['product_for'] == 'S'){
-															$ProductOption = $ProductOption.", Senier";
-														}else if($row['product_for'] == 'A'){
-															$ProductOption = $ProductOption.", Adult";
-														}else if($row['product_for'] == 'C'){
-															$ProductOption = $ProductOption.", Child";
-														}else if($row['product_for'] == 'I'){
-															$ProductOption = $ProductOption.", Infant";
-														}
-														$ProductOption = $ProductOption.")";
-													}else if($row['supplier_type'] == 'D'){
-														$SupplierType = 'Day Trip';
-														$ProductOption = "(".$row['product_desc'].", Trip Time:".$row['product_showtime']."-".$row['product_endtime'].")";
-													//T : Transport
-													}else if($row['supplier_type'] == 'T'){
-														$SupplierType = 'Transport';
-														$ProductOption = "(".$row['product_desc'];
-														if ($row['product_car_type']=='T'){
-															$ProductOption = $ProductOption."Car (Max passenger 3)";
-														}else if($row['product_car_type']=='F'){
-															$ProductOption = $ProductOption."Van (Max passenger 10)";
-														}else if($row['product_car_type']=='E'){
-															$ProductOption = $ProductOption."Bus (Max passenger 40)";
-														}
-														$ProductOption = $ProductOption.")";
-													//O : Other
-													}else{
-														$SupplierType = 'Other';
-														$ProductOption = "(".$row['product_desc'].")";
-													}
 												 ?>
 												<tr>
 													<td>P<?=substr("00000000",1,4-strlen($row['product_id'])).$row['product_id'];?></td>
-													<td><?="<b>".$row['product_name']."</b>  ".$ProductOption?></td>
-													<td><?=$row['supplier_name']?></td>
-													<td><?=$SupplierType?></td>
+													<td><?="<b>".$row['product_name']."</b>  "?></td>
 													<td><?=$statusUser?></td>
 													<td class="center">															
-														<a href="product-addedit.php?id=<?=$row['product_id']?>" class="btn btn-small btn-success">Edit</a>
-														<a href="product-controller.php?id=<?=$row['product_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+														<a href="<?php 
+															if ($_supplier_type=="A")	{
+																echo "product-a-addedit.php?supplier_id=".$supplier_id;
+															}else if ($_supplier_type=="D")	{
+																echo "product-d-addedit.php?supplier_id=".$supplier_id;
+															}else if ($_supplier_type=="T")	{
+																echo "product-t-addedit.php?supplier_id=".$supplier_id;
+															}?>&product_id=<?=$row['product_id']?>" class="btn btn-small btn-success"><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
+														<a href="product-controller.php?id=<?=$row['product_id']?>&hAction=Delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
 													</td>
 												</tr>
 												<?PHP
@@ -573,7 +547,7 @@ include ("inc/scripts.php");
 		$('#dt_basic').dataTable({
 			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.

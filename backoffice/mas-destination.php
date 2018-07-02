@@ -27,7 +27,7 @@
 
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["Master of Supplier"]["sub"]["Destination"]["active"] = true;
+	$page_nav["Supplier"]["sub"]["Master Setup"]["sub"]["Destination"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -125,12 +125,16 @@
 
 					<div class="row header">
 						<div class="col-sm-4 col-md-4 col-lg-4">
-							Keyword<br/> <!--เริ่มทำโปรเจค-->
+							Keyword<br/>
 							<input id="column3_search" type="text" name="googlesearch">
 						</div>
 					</div>
 
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2>Destination</h2>
+						</header>
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
@@ -138,11 +142,10 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">Destination Name </th> <!--เพิ่ม-->
-											<th data-hide="phone">destcoun_id</th> <!--ซ่อน-->
-											<th data-hide="phone">Datetime</th>
-											<th data-hide="phone">Update By</th>
-											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()">Add new</button> </th>
+											<th data-class="expand">Destination</th>
+											<th data-hide="phone">Country</th>
+											<th data-hide="phone">Last Update</th>
+											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()"><i class="fa fa-plus"></i> <span class="hidden-mobile">Add New</span></button> </th>
 										</tr>
 									</thead>
 									<tbody>
@@ -150,21 +153,22 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT dest_id, dest_name,destcoun_id,create_datetime,create_by,update_datetime,update_by from tb_dest_ms";
+											$sql = "SELECT dest_id, dest_name, destcoun_name, tb_dest_ms.update_datetime, tb_dest_ms.update_by 
+													FROM tb_dest_ms, tb_dest_country_ms 
+													WHERE tb_dest_ms.destcoun_id = tb_dest_country_ms.destcoun_id";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
 												while($row = mysqli_fetch_assoc($result))	{?>
 													<tr>
 														<td><?=$row['dest_name']?></td>
-														<td><?=$row['destcoun_id']?></td>
-														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
-														<td><?=$row['update_by']?></td>
+														<td><?=$row['destcoun_name']?></td>
+														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?> (<?=$row['update_by']?>)</td>
 														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['dest_id']?>" >Edit</a>
-															<a href="mas-destination-controller.php?id=<?=$row['dest_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+															data-whatever="<?=$row['dest_id']?>" ><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
+															<a href="mas-destination-controller.php?id=<?=$row['dest_id']?>&hAction=Delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
 														</td>
 													</tr>
 												<?PHP
@@ -196,7 +200,7 @@
 			<div class="modal-body no-padding">
 				<form id="user-form" class="smart-form" method="POST" action="mas-destination-controller.php">
 					<header>
-				Please Specify...
+					Info
 					</header>
 					<fieldset>
 						<section>
@@ -211,36 +215,34 @@
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">DestinationID</label>
+								<label class="label col col-2">Country</label>
 								<div class="col col-10">
-									<label class="input required">
-										<select type="text" name="lsbdest_id" id="lsbdest_id" maxlength="3">
-										<option value="" selected></option>
-										<?php
-											$sql = "SELECT dest_id, dest_name FROM tb_dest_ms	ORDER BY dest_name ";
-											$result = mysqli_query($conn ,$sql);
-											if(mysqli_num_rows($result) > 0)	{
-												//show data for each row
-												while($row = mysqli_fetch_assoc($result))	{?>
-													<option value="<?=$row['dest_id'];?>">
-													<?=$row['dest_name']; ?></option>
-												<?php }
-											}?>
-										</select>
+									<label class="select required">
+										<select name="lsbdestcoun_id" id="lsbdestcoun_id" class="input-sm">
+											<option value="" selected></option>
+											<?php
+												$sql = "SELECT destcoun_id, destcoun_name FROM tb_dest_country_ms ORDER BY destcoun_name ";
+												$result = mysqli_query($conn ,$sql);
+												if(mysqli_num_rows($result) > 0)	{
+													while($row = mysqli_fetch_assoc($result))	{?>
+														<option value="<?=$row['destcoun_id'];?>"><?=$row['destcoun_name']; ?></option>
+													<?php }
+												}?>
+										</select><i></i>
 									</label>
 								</div>
 							</div>
 						</section>
-					<!--<section>
+						<section>
 							<div class="row">
-								<label class="label col col-2">Remark</label>
+								<label class="label col col-2">Description</label>
 								<div class="col col-10">
 									<label class="input">
-										<textarea rows="3" name="txbconf_remark" id="txbconf_remark"></textarea>
+										<textarea rows="2" name="txbdest_desc" id="txbdest_desc"></textarea>
 									</label>
 								</div>
 							</div>
-						</section>-->
+						</section>
 					</fieldset>
 					<footer class="center">
 						<input type="hidden" name="dest_id" id="dest_id" />
@@ -281,9 +283,9 @@
 		};
 
 		$('#dt_basic').dataTable({
-			"sDom":
+			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.
@@ -323,11 +325,13 @@
 					if(data != null){
 						$('#dest_id').val(data.dest_id);
 						$('#txbdest_name').val(data.dest_name);
-						$('#txbdestcoun_id').val(data.destcoun_id);
-					$('#submitAdd').val("Update");
+						$('#txbdest_desc').val(data.dest_desc);
+						$('#lsbdestcoun_id').val(data.destcoun_id);
+						$('#submitAdd').val("Update");
 					}else{
 						$('#dest_id').val('');
 						$('#txbdest_name').val('');
+						$('#txbdest_desc').val('');
 						$('#txbdestcoun_id').val('');
 						$('#submitAdd').val("Insert");
 					}
@@ -372,7 +376,7 @@
 				txbdest_name : {
 					required : true
 				},
-				txbdestcoun_id :{
+				lsbdestcoun_id :{
 					required : true
 				}
 			},
@@ -380,10 +384,10 @@
 			// Messages for form validation
 			messages : {
 			txbdest_name : {
-					required : 'Please fill agentcountry code'
+					required : 'Please fill Destination Name'
 				},
-			txbdestcoun_id : {
-					required : 'Please fill agentcountry name'
+			lsbdestcoun_id : {
+					required : 'Please select Country'
 				}
 			},
 

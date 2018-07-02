@@ -1,12 +1,11 @@
 <?php
-//$LoginByUser = trim($_SESSION['LoginUserID_Agent']);
 //Get number of agent transaction
-//$sql = "SELCT count(*) AS nrow FROM booking WHERE agent_id='$LoginByUser'";
-//$result = mysqli_query($conn ,$sql);
-//if(mysqli_num_rows($result) > 0) {
-//	$row = mysqli_fetch_assoc($result);
-//	$Booking_All_Agent = $row['nrow'];
-//}
+$sql = "SELECT count(*) AS iRow FROM tb_agent_tr WHERE agent_status='W'";
+$result = mysqli_query($conn ,$sql);
+if(mysqli_num_rows($result) > 0) {
+	$row = mysqli_fetch_assoc($result);
+	$Total_Agent_Waiting = $row['iRow'];
+}
 //$sql = "SELECT count(*) AS nrow FROM booking WHERE agent_id='$LoginByUser' and booking_status='C'";
 //$result = mysqli_query($conn ,$sql);
 //if(mysqli_num_rows($result) > 0) {/
@@ -69,6 +68,10 @@ $page_nav = array(
 				"title" => "Daily Transport",
 				"url" => APP_URL."/#"
 			),
+			"Full Product" => array(
+				"title" => "Full Product",
+				"url" => APP_URL."/mas-supplier-fullproduct.php"
+			),
 		),
 	),
 	"E-Wallet" => array(
@@ -80,35 +83,48 @@ $page_nav = array(
 		"title" => "[4] Promotion",
 		"icon" => "fa-book",
 		"sub" => array(
-			"Promo Code" => array(
-				"title" => "Promo Code",
+			"On-top Discount" => array(
+				"title" => "On-top Discount",
 				"url" => APP_URL."/#"
 			),
-			"Deal" => array(
-				"title" => "Deal",
+			"Flash Due" => array(
+				"title" => "Flash Due (Combo)",
+				"url" => APP_URL."/#"
+			),
+			"Promo Code" => array(
+				"title" => "Promo Code",
 				"url" => APP_URL."/#"
 			),
 		),
 	),
 	"Supplier" => array(
-		"title" => "[5] Supplier",
+		"title" => "[5] Supplier & Product",
 		"icon" => "fa-book",
 		"sub" => array(
 			"Supplier List" => array(
-				"title" => "[5.1] Supplier List",
+				"title" => "Supplier & Product List",
 				"url" => APP_URL."/supplier.php"
 			),
-			"Product" => array(
-				"title" => "[5.2] Product List",
-				"url" => APP_URL."/product.php"
+			"Combo Pack List" => array(
+				"title" => "Combo Pack List",
+				"url" => APP_URL."/combo.php"
 			),
-			"Day Off" => array(
-				"title" => "Day Off",
-				"url" => APP_URL."/mas-supplier-dayoff.php"
-			),
-			"Full Product" => array(
-				"title" => "Full Product",
-				"url" => APP_URL."/mas-supplier-fullproduct.php"
+			"Master Setup" => array(
+				"title" => "Master Setup",
+				"sub" => array(
+					"Pick-up Point" => array(
+						"title" => "Pick-up Point",
+						"url" => APP_URL."/mas-pickuppoint.php"
+					),
+					"Destination" => array(
+						"title" => "Destination",
+						"url" => APP_URL."/mas-destination.php"
+					),
+					"Country" => array(
+						"title" => "Country",
+						"url" => APP_URL."/mas-countrydestination.php"
+					),
+				),
 			),
 		),
 	),
@@ -116,64 +132,38 @@ $page_nav = array(
 		"title" => "[6] Agent",
 		"icon" => "fa-book",
 		"sub" => array(
-			"Wait for approve" => array(
-				"title" => "Wait for approve",
+			"Registered Agent" => array(
+				"title" => "Registered Agent",
+				"label_htm" => '<span class="badge bg-color-greenLight pull-right inbox-badge">'.$Total_Agent_Waiting.'</span>',
 				"url" => APP_URL."/agent-status.php"
 			),			
 			"Agent List" => array(
-				"title" => "Agent List",
+				"title" => "All Agent List",
 				"url" => APP_URL."/agent.php"
 			),
-		),
-	),
-	"Support to Agent" => array(
-		"title" => "[7] Support to Agent",
-		"icon" => "fa-book",
-		"sub" => array(
-			"Supplier List" => array(
-				"title" => "Inbox",
-				"url" => APP_URL."/#"
-			),
-			"Product" => array(
-				"title" => "Send Message",
-				"url" => APP_URL."/#"
+			"Master Setup" => array(
+				"title" => "Master Setup",
+				"sub" => array(
+					"Country" => array(
+						"title" => "Country",
+						"url" => APP_URL."/mas-countryagent.php"
+					),
+				),
 			),
 		),
 	),
 	"Accounting" => array(
-		"title" => "[8] Accounting",
+		"title" => "[7] Accounting",
 		"url" => "index.php",
 		"icon" => "fa-book",
 	),
 	"Setting" => array(
-		"title" => "[9] Setting",
+		"title" => "[8] System Setting",
 		"icon" => "fa-book",
 		"sub" => array(
 			"User Management" => array(
-				"title" => "User Management",
+				"title" => "User Setup",
 				"url" => APP_URL."/user.php"
-			),
-			"Master of Supplier" => array(
-				"title" => "Master of Supplier",
-				"sub" => array(
-					"Destination" => array(
-						"title" => "Destination",
-						"url" => APP_URL."/mas-destination.php"
-					),
-					"Country of Destination" => array(
-						"title" => "Country of Destination",
-						"url" => APP_URL."/mas-countrydestination.php"
-					),
-				),
-			),
-			"Master of Agent" => array(
-				"title" => "Master of Agent",
-				"sub" => array(
-					"Country of Agent" => array(
-						"title" => "Country of Agent",
-						"url" => APP_URL."/mas-countryagent.php"
-					),
-				),
 			),
 			"Currency" => array(
 				"title" => "Currency",

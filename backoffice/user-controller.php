@@ -36,7 +36,6 @@ include("inc/connectionToMysql.php");
 			update_by='$LoginByUser' 
 			WHERE user_id = '$user_id'";
 		}
-		echo $sql;
 		$result = mysqli_query($_SESSION['conn'] ,$sql);
 		//echo $result."<br>";
 		

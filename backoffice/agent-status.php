@@ -15,7 +15,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 	
-	$page_title = "Agent Management";
+	$page_title = "Registered Agent";
 	
 	/* ---------------- END PHP Custom Scripts ------------- */
 	
@@ -27,7 +27,7 @@
 	
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Agent"]["sub"]["Agent List"]["active"] = true;
+	$page_nav["Agent"]["sub"]["Registered Agent"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -123,6 +123,10 @@
 				<!-- NEW WIDGET START -->
 				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2>Registered Agent</h2>
+						</header>
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
@@ -151,21 +155,16 @@
 												while($row = mysqli_fetch_assoc($result)){
 													?>
 													<tr>
-														<td>A<?=substr("00000000",1,4-strlen($row['agent_id'])).$row['agent_id']?></td>
+														<td><a href="agent-addedit.php?id=<?=$row['agent_id']?>">A<?=substr("00000000",1,4-strlen($row['agent_id'])).$row['agent_id']?></a></td>
 														<td><?=$row['agent_name']?></td>
 														<td><?=$row['agentcountry_name']?></td>
 														<td><?=$row['agent_contact_email']?></td>
 														<td><?=$row['agent_contact_tel']?></td>
 														<td class="center">
-															<a onclick="resetModal();" class="btn btn-small bg-color-green txt-color-white"
-															data-toggle="modal"
-															data-target="#myModal_Confirm"
-															data-whatever="<?=$row['agent_id']?>">Approve</a>
-
-															<a onclick="resetModal();" class="btn btn-small bg-color-orange txt-color-white"
-															data-toggle="modal"
-															data-target="#myModal"
-															data-whatever="<?=$row['agent_id']?>">Unapprove</a>
+															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Approve" class="btn btn-small bg-color-green txt-color-white">
+																<i class="fa fa-check"></i> <span class="hidden-mobile">Approve</span></a>
+															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Unapprove" class="btn btn-small bg-color-orange txt-color-white">
+																<i class="fa fa-times"></i> <span class="hidden-mobile">Unapprove</span></a>
 														</td>
 													</tr>
 												<?PHP
@@ -242,7 +241,7 @@
 					</section>
 				<footer>		
 					<div class="row center">
-						<input type="hidden" name="booking_detail_id2" id="booking_detail_id2">
+						<input type="hidden" name="id" id="id">
 						<input type="hidden" name="hAction" id="hAction" value="Approve">
 						<button type="submit" class="btn btn-primary" style="float: unset; font-weight: 400;">Approve</button>
 						<button type="button" class="btn btn-default" style="float: unset; font-weight: 400;" data-dismiss="modal">Cancel</button>
@@ -282,7 +281,7 @@
 		$('#dt_basic').dataTable({
 			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.

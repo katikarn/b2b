@@ -152,10 +152,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="jarviswidget jarviswidget-color-orange" id="wid-id-0" data-widget-editbutton="false">
-						<header>
+					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+							<header>
 								<span class="widget-icon"><i class="fa fa-table"></i> </span>
-								<h2>agent List</h2>
+								<h2>Agent Management</h2>
 							</header>
 							<div>
 							<!-- widget content -->
@@ -170,7 +170,7 @@
 											<th data-hide="phone">Email</th>
 											<th data-hide="phone">Tel</th>
 											<th data-hide="phone">Status</th>
-											<th class="center"><a href="agent-addedit.php?type=<?php echo 'add';?>" class="btn btn-small btn-success">Add new</a></th>
+											<th class="center"><a href="agent-addedit.php?type=<?php echo 'add';?>" class="btn btn-small btn-success"><i class="fa fa-plus"></i> <span class="hidden-mobile">Add New</span></a></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -201,10 +201,10 @@
 														<td><?=$row['agentcountry_name']?></td>
 														<td><?=$row['agent_contact_email']?></td>
 														<td><?=$row['agent_contact_tel']?></td>
-														<td><?=$row['agent_status']?></td>
+														<td><?=$statusUser?></td>
 														<td class="center">
-															<a href="agent-addedit.php?id=<?=$row['agent_id'] ?> &&type=<?='edit';?>" class="btn btn-small btn-success">Edit</a>
-															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+															<a href="agent-addedit.php?id=<?=$row['agent_id'] ?> &&type=<?='edit';?>" class="btn btn-small btn-success"><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
+															<a href="agent-controller.php?id=<?=$row['agent_id']?>&hAction=Delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
 														</td>
 													</tr>
 												<?PHP
@@ -248,9 +248,9 @@
 		};
 
 		$('#dt_basic').dataTable({
-			"sDom":
+			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-2 col-xs-12 hidden-xs'i><'hidden-xs col-sm-6 col-md-4 'l><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.

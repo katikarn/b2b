@@ -4,18 +4,18 @@
 
 			<!-- User info -->
 			<div class="login-info">
-				<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
-
+				<span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
+					
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-						<!--<img src="<?php echo ASSETS_URL; ?>/img/avatars/sunny.png" alt="me" class="online" />-->
+						<!--<img src="<?php echo ASSETS_URL; ?>/img/avatars/sunny.png" alt="me" class="online" />--> 
 						<span>
 							<?PHP
 						 echo $_SESSION['LoginUser'];
-					?>
+					?> 
 						</span>
 						<i class="fa fa-angle-down"></i>
-					</a>
-
+					</a> 
+					
 				</span>
 			</div>
 			<!-- end user info -->
@@ -26,7 +26,7 @@
 			(the reference to the nav > ul) after page load. Or the navigation
 			will not initialize.
 			-->
-			<nav style="background-color:#FFCCCC">
+			<nav>
 				<!-- NOTE: Notice the gaps after each icon usage <i></i>..
 				Please note that these links work a bit different than
 				traditional hre="" links. See documentation for details.

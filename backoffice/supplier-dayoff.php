@@ -1,8 +1,28 @@
 <?php
 	session_start();
-	include("inc/auth.php");
+	include('inc/auth.php');
 	include("inc/constant.php");
-	include("inc/connectionToMysql.php");
+    include("inc/connectionToMysql.php");
+    
+    if (isset($_GET['supplier_id']))	{
+		
+		$supplier_id = $_GET['supplier_id'];
+		$sql = "SELECT supplier_status, supplier_type, supplier_name, dest_name, mas_code, mas_value 
+				FROM tb_supplier_tr, tb_dest_ms, tb_mas_ms, tb_masofmas_ms
+				WHERE tb_supplier_tr.dest_id = tb_dest_ms.dest_id
+				AND tb_masofmas_ms.masofmas_id =  tb_mas_ms.masofmas_id
+				AND tb_masofmas_ms.masofmas_name = 'SUPPLIER_TYPE'
+				AND tb_supplier_tr.supplier_id = '".$supplier_id."'";
+
+		$result = mysqli_query($conn ,$sql);
+		mysqli_num_rows($result);
+		$row = mysqli_fetch_assoc($result);
+		$_supplier_status = $row['supplier_status'];
+		$_supplier_type = $row['supplier_type'];
+		$_supplier_name = $row['supplier_name'];
+		$_dest_name = $row['dest_name'];
+		$_mas_value = $row['mas_value'];
+	}
 	/////////////////////////////////////////////////////////
 	//initilize the page
 	require_once ("inc/init.php");
@@ -15,7 +35,7 @@
 		YOU CAN SET CONFIGURATION VARIABLES HERE BEFORE IT GOES TO NAV, RIBBON, ETC.
 	E.G. $page_title = "Custom Title" */
 
-	$page_title = "All Config";
+    $page_title = "Supplier Dayoff of $_supplier_name";
 
 	/* ---------------- END PHP Custom Scripts ------------- */
 
@@ -27,7 +47,7 @@
 
 	//include left panel (navigation)
 	//follow the tree in inc/config.ui.php
-	$page_nav["Setting"]["sub"]["All Config"]["active"] = true;
+	$page_nav["Supplier"]["sub"]["Supplier List"]["active"] = true;
 	include ("inc/nav.php");
 ?>
 
@@ -106,7 +126,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="header">
-					All Config
+                    <?=$_supplier_name?> (<?=$_dest_name?> : <?=$_mas_value?>)<br>
 				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
@@ -133,7 +153,7 @@
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
 						<header>
 							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-							<h2>All Config</h2>
+							<h2>Supplier Dayoff</h2>
 						</header>
 						<div>
 							<!-- widget content -->
@@ -142,10 +162,8 @@
 						        <table id="dt_basic" class="table table-striped table-bordered table-hover" style="margin-top:0px" width="100%">
 									<thead>
 										<tr class="header">
-											<th data-class="expand">Name</th>
-											<th data-hide="phone">Value</th>
-											<th data-hide="phone">Last Update</th>
-											<th data-hide="phone">Update By</th>
+                                            <th data-class="phone">Dayoff</th>
+                                            <th>Remark</th>
 											<th class="center"><button style="padding: 6px 12px;" class="btn btn-primary" id="m1s" data-whatever="" data-toggle="modal" data-target="#myModal" onclick="resetModal()"><i class="fa fa-plus"></i> <span class="hidden-mobile">Add New</span></button> </th>
 										</tr>
 									</thead>
@@ -154,25 +172,26 @@
 											var storeUsername = [];
 										</script>
 										<?PHP
-											$sql = "SELECT conf_id, conf_name, conf_value, update_datetime, update_by
-													FROM tb_conf_ms";
+											$sql = "SELECT dayoff_id, tb_supplier_tr.supplier_id, dayoff_date, dayoff_remark, 
+													tb_supplier_dayoff_tr.create_datetime, tb_supplier_dayoff_tr.create_by, tb_supplier_dayoff_tr.update_datetime, tb_supplier_dayoff_tr.update_by
+													FROM tb_supplier_dayoff_tr, tb_supplier_tr
+                                                    WHERE tb_supplier_dayoff_tr.supplier_id = tb_supplier_tr.supplier_id
+                                                    AND tb_supplier_dayoff_tr.supplier_id = '$supplier_id'";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
 												while($row = mysqli_fetch_assoc($result))	{?>
 													<tr>
-														<td><?=$row['conf_name']?></td>
-														<td><?=$row['conf_value']?></td>
-														<td><?=date("d/m/Y", strtotime($row['update_datetime']))." ".date("H:i", strtotime($row['update_datetime']))?></td>
-														<td><?=$row['update_by']?></td>
+														<td><?=date("d/m/Y", strtotime($row['dayoff_date']))?></td>
+														<td><?=$row['dayoff_remark']?></td>
 														<td class="center"><a onclick="resetModal();" class="btn btn-small btn-success"
 															data-toggle="modal"
 															data-target="#myModal"
-															data-whatever="<?=$row['conf_id']?>" ><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
-															<a href="mas-config-controller.php?id=<?=$row['conf_id']?>&hAction=Delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
+															data-whatever="<?=$row['dayoff_id']?>" ><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
+															<a href="supplier-dayoff-controller.php?lsbsupplier_id=<?=$supplier_id?>&id=<?=$row['dayoff_id']?>&hAction=delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
 														</td>
 													</tr>
-												<?PHP
+													<?PHP
 												}
 											}
 										?>
@@ -195,49 +214,60 @@
 					<i class="icon-append fa fa-times"></i>
 				</button>
 				<h4 class="header">
-					All Config
+					Dayoff
 				</h4>
 			</div>
 			<div class="modal-body no-padding">
-				<form id="user-form" class="smart-form" method="POST" action="mas-config-controller.php">
+				<form action='supplier-dayoff-controller.php' id="user-form" class="smart-form" method="POST">
 					<header>
-						All Config
+						DayOff Info
 					</header>
 					<fieldset>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Name</label>
-								<div class="col col-10">
+								<label class="label col col-3">Supplier</label>
+								<div class="col col-9">
 									<label class="input required">
-										<input type="text" name="txbconf_name" id="txbconf_name">
+										<select name="lsbsupplier_id" id="lsbsupplier_id">
+											<?php
+                                            $sql = "SELECT supplier_id, supplier_name FROM tb_supplier_tr WHERE supplier_id='$supplier_id'";
+                                            echo $sql;
+											$result = mysqli_query($conn ,$sql);
+											if(mysqli_num_rows($result) > 0)	{
+												//show data for each row
+												while($row = mysqli_fetch_assoc($result))	{
+													echo "<option value='".$row['supplier_id']."'";
+													echo ">".$row['supplier_name']."</option>";
+												}
+											}?>
+										</select>
 									</label>
 								</div>
 							</div>
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Value</label>
-								<div class="col col-10">
+								<label class="label col col-3" type="number">Date</label>
+								<div class="col col-7">
 									<label class="input required">
-										<input type="text" name="txbconf_value" id="txbconf_value">
+										<input type="date" name="txbdayoff_date" id="txbdayoff_date">
 									</label>
 								</div>
-							</div>
 						</section>
 						<section>
 							<div class="row">
-								<label class="label col col-2">Remark</label>
-								<div class="col col-10">
+								<label class="label col col-3 header">Remark</label>
+								<div class="col col-9">
 									<label class="input">
-										<textarea rows="3" name="txbconf_remark" id="txbconf_remark"></textarea>
+										<textarea rows="2" name="txbdayoff_remark" id="txbdayoff_remark"></textarea>
 									</label>
 								</div>
 							</div>
 						</section>
 					</fieldset>
 					<footer class="center">
-						<input type="hidden" name="conf_id" id="conf_id" />
-						<button type="submit" name="submitAdd" onclick="" id="submitAdd" class="btn btn-primary" style="float: unset;font-weight: 400;">
+						<input type="hidden" name="dayoff_id" id="dayoff_id" />
+						<button type="submit" name="submitAddDayoff" onclick="" id="submitAddDayoff" class="btn btn-primary" style="float: unset;font-weight: 400;">
 							Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="float: unset;font-weight: 400;">
 							Cancel</button>
@@ -303,7 +333,7 @@
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var recipient = button.data('whatever') // Extract info from data-* attributes
 			var modal = $(this);
-			var dataString = 'conf_id=' + recipient;
+			var dataString = 'dayoff_id=' + recipient;
 			console.log('dataString :'+dataString);
             $.ajax({
 
@@ -314,17 +344,14 @@
 
                 success: function (data) {
 					if(data != null){
-						$('#conf_id').val(data.conf_id);
-						$('#txbconf_name').val(data.conf_name);
-						$('#txbconf_value').val(data.conf_value);
-						$('#txbconf_remark').val(data.conf_remark);
-						$('#submitAdd').val("Update");
+						$('#dayoff_id').val(data.dayoff_id);
+						$('#txbdayoff_date').val(data.dayoff_date);
+						$('#txbdayoff_remark').val(data.dayoff_remark);
+						$('#submitAddDayoff').val("Update");
 					}else{
-						$('#conf_id').val('');
-						$('#txbconf_name').val('');
-						$('#txbconf_value').val('');
-						$('#txbconf_remark').val('');
-						$('#submitAdd').val("Insert");
+						$('#txbdayoff_date').val('');
+						$('#txbdayoff_remark').val('');
+						$('#submitAddDayoff').val("Insert");
 					}
 				},
                 error: function(err) {
@@ -364,21 +391,21 @@
 		    },
 			// Rules for form validation
 			rules : {
-				txbconf_name : {
+				lsbsupplier_id : {
 					required : true
 				},
-				txbconf_value :{
+				txbdayoff_date :{
 					required : true
 				}
 			},
 
 			// Messages for form validation
 			messages : {
-				txbconf_name : {
-					required : 'Please fill config name'
+				lsbsupplier_id : {
+					required : 'Please select Supplier'
 				},
-				txbconf_value : {
-					required : 'Please fill config value'
+				txbdayoff_date : {
+					required : 'Please select Day Off'
 				}
 			},
 
@@ -393,7 +420,7 @@
 	    }, '');
 	    $.validator.addMethod("notEqual", function(value, element, param) {
 	    	var check = true;
-	    	var isCheck = $('#submitAdd').val();
+	    	var isCheck = $('#submitAddDayoff').val();
 	    	for (var i = 0; i < storeUsername.length; i++) {
 	    		//console.log(storeUsername[i]);
 	    		if(value == storeUsername[i] && isCheck == "Insert")

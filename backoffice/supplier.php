@@ -141,6 +141,10 @@
 						</div>
 					</div>
 					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2>Supplier</h2>
+						</header>
 						<div>
 							<!-- widget content -->
 							<div class="widget-body no-padding">
@@ -151,13 +155,18 @@
 											<th data-class="expand">Name</th>
 											<th data-hide="phone">Type</th>
 											<th data-hide="phone">Destination</th>
-											<th>Status</th>
-											<th class="center"><a href="supplier-addedit.php" class="btn btn-small btn-success">Add new</a></th>
+											<th data-hide="phone">Status</th>
+											<th class="center">Setting</th>											
+											<th class="center">
+												<a href="supplier-addedit.php" class="btn btn-small btn-success"><i class="fa fa-plus"></i> 
+												<span class="hidden-mobile">New Supplier</span></a>
+											</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?PHP
-											$sql = "SELECT supplier_id, supplier_name, supplier_type, supplier_destination, supplier_status FROM tb_supplier_tr";
+											$sql = "SELECT supplier_id, supplier_name, supplier_type, dest_name, supplier_status 
+													FROM tb_supplier_tr LEFT JOIN tb_dest_ms ON tb_supplier_tr.dest_id = tb_dest_ms.dest_id";
 											$result = mysqli_query($conn ,$sql);
 											if(mysqli_num_rows($result) > 0){
 												//show data for each row
@@ -185,11 +194,16 @@
 													<td>S<?=substr("00000000",1,4-strlen($row['supplier_id'])).$row['supplier_id']?></td>
 														<td><?=$SupplierName?></td>
 														<td><?=$SupplierType?></td>
-														<td><?=$row['supplier_destination']?></td>
+														<td><?=$row['dest_name']?></td>
 														<td><?=$SupplierStatus?></td>
 														<td class="center">
-															<a href="supplier-addedit.php?id=<?=$row['supplier_id']?>" class="btn btn-small btn-success">Edit</a>
-															<a href="supplier-controller.php?id=<?=$row['supplier_id']?>&hAction=Delete" class="btn btn-small btn-danger">Del</a>
+															<a href="product.php?supplier_id=<?=$row['supplier_id']?>" class="btn btn-primary"><i class="fa fa-gear"></i> <span class="hidden-mobile">Product</span></a>
+															<a href="supplier-dayoff.php?supplier_id=<?=$row['supplier_id']?>" class="btn btn-warning"><i class="fa fa-pause"></i> <span class="hidden-mobile">Day Off</span></a>
+														</td>														
+														<td class="center">
+															<a href="supplier-addedit.php?supplier_id=<?=$row['supplier_id']?>" class="btn btn-small btn-success"><i class="fa fa-pencil"></i> <span class="hidden-mobile">Edit</span></a>
+															<a href="supplier-controller.php?supplier_id=<?=$row['supplier_id']?>&hAction=Delete" class="btn btn-small btn-danger"><i class="fa fa-trash-o"></i> <span class="hidden-mobile">Del</span></a>
+														</td>
 													</tr>
 													<?PHP
 												}}
@@ -572,7 +586,7 @@
 		$('#dt_basic').dataTable({
 			"sDom": 
 			"t"+
-			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"<'dt-toolbar-footer'<'col-sm-3 col-xs-6 hidden-xs'i><'col-sm-3 col-xs-6 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
 			"autoWidth" : true,
 			"preDrawCallback" : function() {
 				// Initialize the responsive datatables helper once.
